@@ -6,6 +6,9 @@ html, body {
   margin: 0;
   font-family: 'Merriweather Sans', sans-serif; }
 
+#__next {
+  overflow: hidden; }
+
 ul {
   list-style: none;
   padding-left: 0px;
@@ -24,5 +27,8 @@ a {
 input, button {
   -webkit-appearance: none;
   border: 0; }
+
+.blueTheme {
+  background-color: #197dff; }
 
 /*# sourceMappingURL=globals.css.map */

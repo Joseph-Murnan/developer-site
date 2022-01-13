@@ -1,0 +1,13 @@
+.hero {
+    height:100vh;
+    display:flex;
+    position:relative;
+    direction:rtl;
+    align-items:center;
+}
+
+@media (max-height:900px) {
+    .hero {
+        height:700px;
+    }
+}
