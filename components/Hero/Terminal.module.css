@@ -1,0 +1,60 @@
+.typeContainer {
+    padding:25px 22px;
+    display:inline-block;
+    min-width:30%;
+    background:rgba(0,0,0,0.4);
+    text-align:left;
+    margin-right:5%;
+    font-family:monospace;
+    min-height:170px;
+    animation:fadeDelay 1.5s ease;
+    border-radius:3px;
+}
+
+.typing {
+    position:relative;
+    display:inline;
+    font-size:19px;
+    color:whitesmoke;
+    padding-left:22%;
+}
+
+.typing::before {
+    content:'$joseph';
+    position:absolute;
+    left:0;
+}
+
+.typing::after {
+    content:'';
+    position:absolute;
+    width:1px;
+    height:100%;
+    border-right:2px solid white;
+    right:-4px;
+    animation: blink 1.2s infinite ease;
+}
+
+@keyframes blink {
+    0% {
+        opacity:0;
+    }
+    45% {
+        opacity:0;
+    }
+    55% {
+        opacity:1;
+    }
+}
+
+@keyframes fadeDelay {
+    0% {
+        opacity:0;
+    }
+    75% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
