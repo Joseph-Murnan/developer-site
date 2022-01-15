@@ -1,0 +1,95 @@
+@import 'variables.scss';
+
+.navContainer {
+    display:inline-block;
+    position:fixed;
+    top:25px;
+    right:25px;
+    z-index:2;
+    &.false .bar {
+        &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+            -webkit-transform-origin:left center;
+            -moz-transform-origin:left center;
+            -o-transform-origin:left center;
+            transform-origin:left center;
+        }
+    }
+    &.true {
+        #menu {
+            height:auto;
+            width:250px;
+            opacity:1;
+            li a {
+                color:white;
+            }
+        }
+        .bar {
+            margin-bottom:0;
+            &:nth-child(1) {
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                transform: rotate(45deg);
+                margin-top: -3px;
+            }
+            &:nth-child(2) {
+                opacity: 0;
+            }
+            &:nth-child(3) {
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                margin-top:-2px;
+            }
+        }
+    }
+}
+
+.navBtn {
+    cursor:pointer;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:3;
+    background:rgba(20, 20, 20, 1);
+    height:38px;
+    width:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#menu {
+    height:0;
+    width:0;
+    border-radius:4px;
+    transition:0.2s;
+    opacity:0;
+    li {
+        a {
+            display:block;
+            background:rgb(25, 25, 25);
+            transition:0.15s;
+            color:transparent;
+            padding:9px 15px;
+            border-bottom:1px solid rgba(45, 45, 45, 1);
+            &:hover {
+                background:rgb(35, 35, 35);
+            }
+        }
+    }
+}
+
+.barContainer {
+    margin-top:5px;
+}
+
+.bar {
+    background-color:white;
+    display:block;
+    width:25px;
+    height:1px;
+    margin-bottom:5px;
+    transition:all ease-in-out 0.2s;
+}

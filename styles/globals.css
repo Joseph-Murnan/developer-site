@@ -1,3 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400&display=swap");
+.navContainer {
+  display: inline-block;
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 2; }
+  .navContainer.false .bar:nth-child(1), .navContainer.false .bar:nth-child(2), .navContainer.false .bar:nth-child(3) {
+    -webkit-transform-origin: left center;
+    -moz-transform-origin: left center;
+    -o-transform-origin: left center;
+    transform-origin: left center; }
+  .navContainer.true #menu {
+    height: auto;
+    width: 250px;
+    opacity: 1; }
+    .navContainer.true #menu li a {
+      color: white; }
+  .navContainer.true .bar {
+    margin-bottom: 0; }
+    .navContainer.true .bar:nth-child(1) {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+      margin-top: -3px; }
+    .navContainer.true .bar:nth-child(2) {
+      opacity: 0; }
+    .navContainer.true .bar:nth-child(3) {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      margin-top: -2px; }
+
+.navBtn {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  background: #141414;
+  height: 38px;
+  width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#menu {
+  height: 0;
+  width: 0;
+  border-radius: 4px;
+  transition: 0.2s;
+  opacity: 0; }
+  #menu li a {
+    display: block;
+    background: #191919;
+    transition: 0.15s;
+    color: transparent;
+    padding: 9px 15px;
+    border-bottom: 1px solid #2d2d2d; }
+    #menu li a:hover {
+      background: #232323; }
+
+.barContainer {
+  margin-top: 5px; }
+
+.bar {
+  background-color: white;
+  display: block;
+  width: 25px;
+  height: 1px;
+  margin-bottom: 5px;
+  transition: all ease-in-out 0.2s; }
+
 * {
   box-sizing: border-box; }
 

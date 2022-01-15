@@ -1,8 +1,31 @@
 import { Fragment } from 'react'
 import Head from 'next/head'
+import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 
 interface layoutProps {
-    children: Object
+    children: { props: object }
+}
+
+export interface pageCollection {
+    nav: Array<{label: string, href: string}>
+}
+
+const pageProps: pageCollection = { // eventually pull this asynchronously from external json
+    "nav": [
+        {
+            "label": "About",
+            "href": "#"
+        },
+        {
+            "label": "Components",
+            "href": "#"
+        },
+        {
+            "label": "Contact",
+            "href": "#"
+        }
+    ]
 }
 
 const Layout = (props: layoutProps) => {
@@ -13,7 +36,9 @@ const Layout = (props: layoutProps) => {
                 <meta name="description" content="" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Nav pageProps={pageProps} />
             {props.children}
+            <Footer />
         </Fragment>
     );
 }

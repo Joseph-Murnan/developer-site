@@ -1,11 +1,14 @@
 import type { NextPage } from 'next'
 import Hero from '../components/Hero/Hero';
+import { Fragment } from 'react';
+import Text from '../components/Text/Text';
 
 const Home: NextPage = () => {
     return (
-        <div>
+        <Fragment>
             <Hero />
-        </div>
+            <Text />
+        </Fragment>
     )
 }
 
