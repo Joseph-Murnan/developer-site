@@ -14,10 +14,10 @@ const Terminal = () => {
         letter = terminalText[count].slice(0, ++index);
         setWrittenText(letter);
         if(letter.length === terminalText[count].length) {
-            count++;
-            if(terminalText.indexOf(terminalText[count]) !== (terminalText.length - 1)) {
+            if(terminalText.indexOf(terminalText[count]) == (terminalText.length - 1)) {
                 return;
             }
+            count++;
             index = 0;
             timeout = 700;
         } else if(timeout !== 70) {
