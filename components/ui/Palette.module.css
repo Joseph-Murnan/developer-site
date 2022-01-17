@@ -1,0 +1,40 @@
+.switchContainer {
+    padding:15px 10px;
+    display:inline-block;
+    position:fixed;
+    right:0;
+    top:calc(50% - 18px);
+    border:solid rgba(25, 25, 25, 0.95);
+    border-width:1px 0px 1px 1px;
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+    z-index:10;
+    background-color:#141414;
+}
+
+.iconContainer {
+    display:flex;
+    height:22px;
+    width:22px;
+    border-radius:50%;
+    overflow:hidden;
+    margin:9px 0;
+}
+
+.icon {
+    height:100%;
+    width:100%;
+    font-size:0px;
+    display:inline-block;
+}
+
+.icon button {
+    cursor:pointer;
+}
+
+.iconOne { /* Avoid scoping this? */
+    background:#197dff;
+}
+.iconTwo {
+    background:rgb(177, 13, 13);
+}
