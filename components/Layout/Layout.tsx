@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { ThemeProvider } from '../../store/theme';
 import Head from 'next/head'
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
@@ -30,7 +30,7 @@ const pageProps: pageCollection = { // eventually pull this asynchronously from 
 
 const Layout = (props: layoutProps) => {
     return (
-        <Fragment>
+        <ThemeProvider>
             <Head>
                 <title>Joseph Murnan</title>
                 <meta name="description" content="" />
@@ -39,7 +39,7 @@ const Layout = (props: layoutProps) => {
             <Nav pageProps={pageProps} />
             {props.children}
             <Footer />
-        </Fragment>
+        </ThemeProvider>
     );
 }
 

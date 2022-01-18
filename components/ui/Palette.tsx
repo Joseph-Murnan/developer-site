@@ -1,13 +1,17 @@
-import styles from './Palette.module.css'
+import { useContext } from 'react';
+import Theme from '../../store/theme';
+import styles from './Palette.module.css';
+// import { clickEvent } from '../components/ui/Palette';
 
 const Palette = () => {
+    const themeContext = useContext(Theme);
     return (
         <div className={styles.switchContainer}>
             <div className={styles.iconContainer}>
-                <button name="one" className={`${styles.icon} ${styles.iconOne}`}></button>
+                <button name="blueTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconOne}`}></button>
             </div>
             <div className={styles.iconContainer}>
-                <button name="two" className={`${styles.icon} ${styles.iconTwo}`}></button>
+                <button name="redTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconTwo}`}></button>
             </div>
         </div>
     );
