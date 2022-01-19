@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import styles from './Terminal.module.css';
 
 let count: number = 0;
@@ -28,7 +28,16 @@ const Terminal = () => {
     useEffect(() => {
         setTimeout(write, 2000);
     }, []);
-    return <div className={styles.typeContainer}><h1 className={styles.typing}>{writtenText}</h1></div>;
+    return (
+        <div className={styles.terminal}>
+            <div className={styles.windowBar}>
+                <span>Joseph</span>
+            </div>
+            <div className={styles.textContainer}>
+                <p className={styles.typing}>{writtenText}</p>
+            </div>
+        </div>
+    );
 }
 
 export default Terminal;
