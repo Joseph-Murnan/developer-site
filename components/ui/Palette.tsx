@@ -13,6 +13,9 @@ const Palette = () => {
             <div className={styles.iconContainer}>
                 <button name="redTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconTwo}`}></button>
             </div>
+            <div className={styles.iconContainer}>
+                <button name="purpleTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconThree}`}></button>
+            </div>
         </div>
     );
 }

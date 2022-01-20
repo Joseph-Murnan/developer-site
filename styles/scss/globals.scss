@@ -40,10 +40,24 @@ input, button {
     border:0;
 }
 
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(0px, 1fr));
+    height:100%;
+}
+
+.centre {
+    display:flex;
+    justify-content:center;;
+}
+
 // themes
 .blueTheme {
     background-color:$blue;
 }
 .redTheme {
     background-color:$red;
+}
+.purpleTheme {
+    background-color:$purple;
 }

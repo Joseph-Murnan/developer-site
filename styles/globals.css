@@ -103,10 +103,22 @@ input, button {
   -webkit-appearance: none;
   border: 0; }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+  height: 100%; }
+
+.centre {
+  display: flex;
+  justify-content: center; }
+
 .blueTheme {
   background-color: #197dff; }
 
 .redTheme {
   background-color: #9b1616; }
+
+.purpleTheme {
+  background-color: #8506da; }
 
 /*# sourceMappingURL=globals.css.map */
