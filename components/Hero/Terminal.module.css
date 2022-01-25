@@ -49,6 +49,21 @@
     animation: blink 1.2s infinite ease;
 }
 
+.userInput {
+    background:transparent;
+    width:100%;
+    padding:0 0 0 85px;
+    color:white;
+    font-family:monospace;
+    font-size:19px;
+    border:0;
+    resize:none;
+}
+
+.userInput:focus-visible {
+    outline:0;
+}
+
 @keyframes blink {
     0% {
         opacity:0;

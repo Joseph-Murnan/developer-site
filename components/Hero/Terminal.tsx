@@ -8,6 +8,7 @@ let timeout: number = 70;
 const terminalText: Array<string> = ['textOne', 'textTwo'];
 
 const Terminal = () => {
+    const [terminalLock, setTerminalLock] = useState(true);
     const [writtenText, setWrittenText] = useState('');
     const write = () => {
         count === terminalText.length ? count = 0 : null;
@@ -15,6 +16,7 @@ const Terminal = () => {
         setWrittenText(letter);
         if(letter.length === terminalText[count].length) {
             if(terminalText.indexOf(terminalText[count]) == (terminalText.length - 1)) {
+                setTerminalLock(false);
                 return;
             }
             count++;
@@ -24,6 +26,9 @@ const Terminal = () => {
             timeout = 70;
         }
         setTimeout(write, timeout);
+    };
+    const changeText = (e: React.FormEvent<HTMLTextAreaElement>) => {
+        e.target instanceof HTMLTextAreaElement && setWrittenText(e.target.value);
     }
     useEffect(() => {
         setTimeout(write, 2000);
@@ -34,7 +39,9 @@ const Terminal = () => {
                 <span>Joseph</span>
             </div>
             <div className={styles.textContainer}>
-                <p className={styles.typing}>{writtenText}</p>
+                <p className={styles.typing}></p>
+                <textarea value={writtenText} className={styles.userInput}
+                    onChange={(e) => !terminalLock && changeText(e)}></textarea>
             </div>
         </div>
     );
