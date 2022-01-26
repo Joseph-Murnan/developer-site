@@ -39,7 +39,7 @@ const Terminal = () => {
                 <span>Joseph</span>
             </div>
             <div className={styles.textContainer}>
-                <p className={styles.typing}></p>
+                <p className={styles.user}></p>
                 <textarea value={writtenText} className={styles.userInput}
                     onChange={(e) => !terminalLock && changeText(e)}></textarea>
             </div>
