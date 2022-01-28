@@ -5,7 +5,7 @@ import styles from './Decoration.module.css';
 const Decoration = () => {
     const themeContext = useContext(Theme);
     return (
-        <div className={`${styles.decoration} ${themeContext.theme}`}>
+        <div className={`${styles.decoration} theme background ${themeContext.theme}`}>
             <div className={styles.pane}></div>
         </div>
     );

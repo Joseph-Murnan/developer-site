@@ -51,13 +51,29 @@ input, button {
     justify-content:center;;
 }
 
-// themes
-.blueTheme {
-    background-color:$blue;
-}
-.redTheme {
-    background-color:$red;
-}
-.purpleTheme {
-    background-color:$purple;
+.theme {
+    &.background {
+        &.blueTheme {
+            background-color:$blue;
+        }
+        &.redTheme {
+            background-color:$red;
+        }
+        &.purpleTheme {
+            background-color:$purple;
+        }
+    }
+    &.hover:hover {
+        &.border-left {
+            &.blueTheme {
+                border-left-color:$blue;
+            }
+            &.redTheme {
+                border-left-color:$red;
+            }
+            &.purpleTheme {
+                border-left-color:$purple;
+            }
+        }
+    }
 }

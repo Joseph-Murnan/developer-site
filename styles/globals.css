@@ -52,15 +52,18 @@
   border-radius: 4px;
   transition: 0.2s;
   opacity: 0; }
-  #menu li a {
-    display: block;
-    background: #191919;
-    transition: 0.15s;
-    color: transparent;
-    padding: 9px 15px;
-    border-bottom: 1px solid #2d2d2d; }
-    #menu li a:hover {
-      background: #232323; }
+
+.menuItem a {
+  display: block;
+  background: #191919;
+  transition: 0.15s;
+  color: transparent;
+  padding: 9px 14px;
+  border-width: 0px 0px 1px 1px;
+  border-style: solid;
+  border-color: #2d2d2d; }
+  .menuItem a:hover {
+    background: #232323; }
 
 .barContainer {
   margin-top: 5px; }
@@ -112,13 +115,17 @@ input, button {
   display: flex;
   justify-content: center; }
 
-.blueTheme {
+.theme.background.blueTheme {
   background-color: #197dff; }
-
-.redTheme {
+.theme.background.redTheme {
   background-color: #9b1616; }
-
-.purpleTheme {
+.theme.background.purpleTheme {
   background-color: #8506da; }
+.theme.hover:hover.border-left.blueTheme {
+  border-left-color: #197dff; }
+.theme.hover:hover.border-left.redTheme {
+  border-left-color: #9b1616; }
+.theme.hover:hover.border-left.purpleTheme {
+  border-left-color: #8506da; }
 
 /*# sourceMappingURL=globals.css.map */
