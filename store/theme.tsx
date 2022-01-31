@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-interface themeProps {
+interface Props {
     children: Array <Object>
 }
 
@@ -13,13 +13,12 @@ interface clickEvent extends React.MouseEvent<HTMLButtonElement> {
 }
 
 const Theme = React.createContext({
-    theme:'one',
-    onSwitch:(props: clickEvent) => {}
-    // onSwitch:(props: clickEvent) => {}
+    theme: 'blueTheme',
+    onSwitch: (props: clickEvent) => {}
 });
 
-export const ThemeProvider = (props: themeProps) => {
-    const [theme, setTheme] = useState('one');
+export const ThemeProvider = (props: Props) => {
+    const [theme, setTheme] = useState('');
     useEffect(() => setTheme((localStorage.getItem('theme') || 'blueTheme')), []);
     const switchHandler = (props: clickEvent) => {
         setTheme(props.target.name);

@@ -2,13 +2,13 @@ import { useState, useContext } from 'react';
 import { pageCollection } from '../Layout/Layout';
 import Theme from '../../store/theme';
 
-interface navProps {
+interface Props {
     pageProps: pageCollection
 }
 
-const Nav = (props: navProps) => {
+const Nav = (props: Props) => {
     const [open, setOpen] = useState(false);
-    const handleMenu = () => setOpen(!open);
+    const handleMenu = () => setOpen(prevOpen => !prevOpen);
     const themeContext = useContext(Theme);
     return (
         <div className={`${open.toString()} navContainer`}>

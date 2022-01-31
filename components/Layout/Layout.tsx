@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-interface layoutProps {
+interface Props {
     children: { props: object }
 }
 
@@ -28,7 +28,7 @@ const pageProps: pageCollection = { // eventually pull this asynchronously from 
     ]
 }
 
-const Layout = (props: layoutProps) => {
+const Layout = (props: Props) => {
     return (
         <ThemeProvider>
             <Head>
