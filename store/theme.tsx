@@ -4,25 +4,17 @@ interface Props {
     children: Array <Object>
 }
 
-interface themeButton extends HTMLButtonElement {
-    name: string
-}
-
-interface clickEvent extends React.MouseEvent<HTMLButtonElement> {
-    target: themeButton
-}
-
 const Theme = React.createContext({
     theme: 'blueTheme',
-    onSwitch: (props: clickEvent) => {}
+    onSwitch: (props: React.MouseEvent<HTMLButtonElement>) => {}
 });
 
 export const ThemeProvider = (props: Props) => {
     const [theme, setTheme] = useState('');
     useEffect(() => setTheme((localStorage.getItem('theme') || 'blueTheme')), []);
-    const switchHandler = (props: clickEvent) => {
-        setTheme(props.target.name);
-        localStorage.setItem('theme', props.target.name);
+    const switchHandler = (props: React.MouseEvent<HTMLButtonElement>) => {
+        setTheme(props.currentTarget.name);
+        localStorage.setItem('theme', props.currentTarget.name);
     };
     return <Theme.Provider value={{theme, onSwitch: switchHandler}}>{props.children}</Theme.Provider>
 }
