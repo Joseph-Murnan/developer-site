@@ -8,13 +8,13 @@ const Palette = () => {
     return (
         <div className={styles.switchContainer}>
             <div className={styles.iconContainer}>
-                <button name="blueTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconOne}`}></button>
+                <button aria-label="blueTheme" name="blueTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconOne}`}></button>
             </div>
             <div className={styles.iconContainer}>
-                <button name="redTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconTwo}`}></button>
+                <button aria-label="redTheme" name="redTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconTwo}`}></button>
             </div>
             <div className={styles.iconContainer}>
-                <button name="purpleTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconThree}`}></button>
+                <button aria-label="purpleTheme" name="purpleTheme" onClick={themeContext.onSwitch} className={`${styles.icon} ${styles.iconThree}`}></button>
             </div>
         </div>
     );

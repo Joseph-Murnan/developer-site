@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-type Props = {
+interface Props {
     title: string;
     index: number;
     setOpenTab: (index: number) => void;

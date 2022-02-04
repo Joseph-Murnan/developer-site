@@ -2,7 +2,7 @@ import { ReactElement, useState, Fragment } from 'react';
 import Tab from './Tab';
 import styles from './Terminal.module.css';
 
-type Props = {
+interface Props {
     children: ReactElement[];
 }
 
