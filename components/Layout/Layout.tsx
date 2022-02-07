@@ -2,13 +2,17 @@ import { ThemeProvider } from '../../store/theme';
 import Head from 'next/head'
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
+import { ReactElement } from 'react';
 
 interface Props {
-    children: { props: object }
+    children: ReactElement
 }
 
 export interface pageCollection {
-    nav: Array<{label: string, href: string}>
+    nav: Array<{
+        label: string,
+        href: string
+    }>
 }
 
 const pageProps: pageCollection = { // eventually pull this asynchronously from external json
@@ -37,7 +41,7 @@ const Layout = (props: Props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Nav pageProps={pageProps} />
-            {props.children}
+            { props.children }
             <Footer />
         </ThemeProvider>
     );
