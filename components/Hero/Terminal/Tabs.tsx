@@ -11,7 +11,7 @@ const Tabs = (props: Props) => {
     const [openTab, setOpenTab] = useState(0);
     return (
         <Fragment>
-            <ul>
+            <ul className={styles.tabList}>
                 { windows.map((item, index) => 
                     <li key={index} className={`${styles.tab} ` + (index == openTab && `${'active'}`)}>
                         <Tab title={item.props.title} index={index} setOpenTab={setOpenTab} />

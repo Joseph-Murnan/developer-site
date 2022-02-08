@@ -5,6 +5,11 @@ interface Props {
     title: string;
 }
 
+const keystrokes: Array<String> = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '
+];
+
 let count: number = 0;
 let index: number = 0;
 let letter: string = '';
@@ -33,22 +38,28 @@ const Window = (props: Props) => {
         }
         timer = setTimeout(write, timeout);
     }, []);
-    const changeText = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
+    const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
-        e.target instanceof HTMLTextAreaElement && setWrittenText(e.target.value);
-    }, []);
+        let input: string = e.key;
+        if(keystrokes.includes(input)) {
+            let prevState: string = writtenText;
+            setWrittenText(prevState += input);
+        } else if(input === 'Backspace') {
+            let prevState: string = writtenText;
+            setWrittenText(prevState.slice(0, -1));
+        }
+    };
     useEffect(() => {
-        write();
+        writtenText === '' && write();
         return () => {
-            setWrittenText('');
+            // setWrittenText('');
             clearTimeout(timer);
         };
     }, []);
     return (
         <div className={styles.textContainer}>
             <p className={styles.user}></p>
-            <textarea value={writtenText} className={styles.terminalContent}
-                onChange={e => !terminalLock && changeText(e)}></textarea>
+            <div className={styles.terminalContent} contentEditable={true} onKeyDown={e => !terminalLock && keyDown(e)}>{writtenText}</div>
         </div>
     );
 }
