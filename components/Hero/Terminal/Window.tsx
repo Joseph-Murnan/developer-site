@@ -1,13 +1,18 @@
 import { useEffect, useState, useCallback } from 'react';
 import styles from './Terminal.module.css';
+import fs from '../../../store/fs.json';
 
 interface Props {
     title: string;
 }
 
-const keystrokes: Array<String> = [
+const keystrokes: Array<string> = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '
+];
+
+const commandTypes: Array<string> = [
+    'cd', 'ls'
 ];
 
 let count: number = 0;
@@ -47,8 +52,18 @@ const Window = (props: Props) => {
         } else if(input === 'Backspace') {
             let prevState: string = writtenText;
             setWrittenText(prevState.slice(0, -1));
+        } else if(input === 'Enter') {
+            let commandType: string;
+            let prevState: string = writtenText;
+            let segments: Array<string> = prevState.split(' ');
+            segments.length > 0 && (commandType = segments[0]);
+            if(segments.length > 0) {
+                commandType = segments[0];
+                commandTypes.includes(commandType) && handleCommand(commandType, segments);
+            }
         }
     };
+    const handleCommand = (commandType: string, segments: Array<string>) => {};
     useEffect(() => {
         writtenText === '' && write();
         return () => {
@@ -59,7 +74,9 @@ const Window = (props: Props) => {
     return (
         <div className={styles.textContainer}>
             <p className={styles.user}></p>
-            <div className={styles.terminalContent} contentEditable={true} onKeyDown={e => !terminalLock && keyDown(e)}>{writtenText}</div>
+            <div className={styles.terminalContent} 
+            contentEditable={true} suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
+            onKeyDown={e => !terminalLock && keyDown(e)}>{writtenText}</div>
         </div>
     );
 }
