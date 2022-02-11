@@ -4,15 +4,15 @@ import fs from '../../../store/fs.json';
 
 interface Props {
     title: string;
-}
+};
+
+interface CommandSet {
+    [key: string]: Function
+};
 
 const keystrokes: Array<string> = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '
-];
-
-const commandTypes: Array<string> = [
-    'cd', 'ls'
 ];
 
 let count: number = 0;
@@ -25,6 +25,7 @@ let timer: ReturnType<typeof setTimeout>;
 const Window = (props: Props) => {
     const [terminalLock, setTerminalLock] = useState(true);
     const [writtenText, setWrittenText] = useState('');
+    const [files, setFiles] = useState([fs]);
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
         letter = terminalText[count].slice(0, ++index);
@@ -43,6 +44,21 @@ const Window = (props: Props) => {
         }
         timer = setTimeout(write, timeout);
     }, []);
+    const getCommand = useCallback((commandType: string) => {
+        const commandTypes: CommandSet = {
+            'cd': changeDirectory,
+            'ls': list
+        };
+        if(commandTypes.hasOwnProperty(commandType)) {
+            return commandTypes[commandType];
+        } else {
+            return handleCommandNotFound;
+        }
+    }, []);
+    const getCurrent = () => {};
+    const changeDirectory = (segments: Array<string>) => {};
+    const list = (segments: Array<string>) => {};
+    const handleCommandNotFound = (segments: Array<string>) => {};
     const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         let input: string = e.key;
@@ -56,14 +72,13 @@ const Window = (props: Props) => {
             let commandType: string;
             let prevState: string = writtenText;
             let segments: Array<string> = prevState.split(' ');
-            segments.length > 0 && (commandType = segments[0]);
             if(segments.length > 0) {
                 commandType = segments[0];
-                commandTypes.includes(commandType) && handleCommand(commandType, segments);
+                let command = getCommand(commandType);
+                command && command(segments);
             }
         }
     };
-    const handleCommand = (commandType: string, segments: Array<string>) => {};
     useEffect(() => {
         writtenText === '' && write();
         return () => {
