@@ -1,9 +1,9 @@
-import { useContext } from 'react';
+import { useContext, ReactElement } from 'react';
 import Theme from '../../store/theme';
 import styles from './Palette.module.css';
 // import { clickEvent } from '../components/ui/Palette';
 
-const Palette = () => {
+const Palette = (): ReactElement => {
     const themeContext = useContext(Theme);
     return (
         <div className={styles.switchContainer}>

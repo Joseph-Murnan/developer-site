@@ -6,7 +6,7 @@ interface Props {
     children: ReactElement[];
 }
 
-const Tabs = (props: Props) => {
+const Tabs = (props: Props): ReactElement => {
     const windows = props.children;
     const [openTab, setOpenTab] = useState(0);
     return (

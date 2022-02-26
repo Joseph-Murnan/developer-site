@@ -1,7 +1,8 @@
+import { ReactElement } from 'react';
 import styles from './Text.module.css';
 import TextSlice from './TextSlice';
 
-const Text = () => {
+const Text = (): ReactElement => {
     return (
         <div className={styles.textContainer}>
             <TextSlice />

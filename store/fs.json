@@ -1,18 +1,21 @@
 {
-    "current": true,
     "desktop": {
+        "name": "desktop",
         "type": "directory",
         "current": false
     },
     "documents": {
+        "name": "documents",
         "type": "directory",
         "current": false,
         "sites": {
+            "name": "sites",
             "type": "directory",
             "current": false,
             "developer-site": {
+                "name": "developer-site",
                 "type": "directory",
-                "current": false
+                "current": true
             }
         }
     }

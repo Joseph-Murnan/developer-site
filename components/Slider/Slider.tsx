@@ -1,7 +1,8 @@
+import { ReactElement } from 'react';
 import Facade from './Facade/Facade';
 import styles from './Slider.module.css';
 
-const Slider = () => {
+const Slider = (): ReactElement => {
     return (
         <div className={`${styles.section}`}>
             <div className="grid">

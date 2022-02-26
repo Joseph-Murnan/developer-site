@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, ReactElement } from 'react';
 import { pageCollection } from '../Layout/Layout';
 import Theme from '../../store/theme';
 
@@ -6,7 +6,7 @@ interface Props {
     pageProps: pageCollection
 }
 
-const Nav = (props: Props) => {
+const Nav = (props: Props): ReactElement => {
     const [open, setOpen] = useState(false);
     const handleMenu = () => setOpen(prevOpen => !prevOpen);
     const themeContext = useContext(Theme);

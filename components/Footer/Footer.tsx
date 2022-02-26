@@ -1,4 +1,6 @@
-const Footer = () => {
+import { ReactElement } from 'react';
+
+const Footer = (): ReactElement => {
     return <div className="footer"></div>;
 };
 

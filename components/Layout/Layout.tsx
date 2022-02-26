@@ -32,7 +32,7 @@ const pageProps: pageCollection = { // eventually pull this asynchronously from 
     ]
 }
 
-const Layout = (props: Props) => {
+const Layout = (props: Props): ReactElement => {
     return (
         <ThemeProvider>
             <Head>

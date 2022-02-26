@@ -9,7 +9,7 @@ const Theme = React.createContext({
     onSwitch: (props: React.MouseEvent<HTMLButtonElement>) => {}
 });
 
-export const ThemeProvider = (props: Props) => {
+export const ThemeProvider = (props: Props): ReactElement => {
     const [theme, setTheme] = useState('');
     useEffect(() => setTheme((localStorage.getItem('theme') || 'blueTheme')), []);
     const switchHandler = (props: React.MouseEvent<HTMLButtonElement>) => {

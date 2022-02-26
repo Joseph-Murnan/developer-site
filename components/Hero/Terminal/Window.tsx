@@ -1,6 +1,21 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, ReactElement } from 'react';
 import styles from './Terminal.module.css';
 import fs from '../../../store/fs.json';
+
+interface FileSystem {
+    [key: string]: Directory;
+}
+
+interface Directory {
+    name: string;
+    current: boolean;
+    type: string;
+};
+
+interface DirectorySearchResponse {
+    success: boolean;
+    folder: Directory;
+};
 
 interface Props {
     title: string;
@@ -8,6 +23,12 @@ interface Props {
 
 interface CommandSet {
     [key: string]: Function
+};
+
+const defaultActiveState: Directory = {
+    name: 'developer-site',
+    current: true,
+    type: 'directory'
 };
 
 const keystrokes: Array<string> = [
@@ -21,11 +42,15 @@ let letter: string = '';
 let timeout: number;
 const terminalText: Array<string> = ['textOne', 'textTwo'];
 let timer: ReturnType<typeof setTimeout>;
+const loopLimit: number = 99;
+let loopCounter: number = 0;
 
-const Window = (props: Props) => {
+const Window = (props: Props): ReactElement => {
     const [terminalLock, setTerminalLock] = useState(true);
     const [writtenText, setWrittenText] = useState('');
-    const [files, setFiles] = useState([fs]);
+    const importedFiles: FileSystem = fs;
+    const [files, setFiles] = useState(importedFiles);
+    const [active, setActive] = useState(defaultActiveState);
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
         letter = terminalText[count].slice(0, ++index);
@@ -55,8 +80,26 @@ const Window = (props: Props) => {
             return handleCommandNotFound;
         }
     }, []);
-    const getCurrent = () => {};
-    const changeDirectory = (segments: Array<string>) => {};
+    const searchFolders = (folder: Directory): DirectorySearchResponse => {
+        let current: boolean = folder['current'];
+        loopCounter++;
+        if(current) {
+            setActive(folder);
+            return { 'success': true, 'folder': folder };
+        } else if(current === false && loopCounter <= loopLimit) {
+            let subdirectories = Object.values(folder).filter(f => (typeof f === 'object' && f.type === 'directory') && f);
+            subdirectories.length > 0 && subdirectories.find(s => searchFolders(s)['success']);
+        }
+        return { 'success': false, 'folder': folder };
+    };
+    const setCurrent = (fileSystem: FileSystem) => {
+        loopCounter = 0;
+        Object.values(fileSystem).forEach(f => searchFolders(f));
+    };
+    const changeDirectory = (segments: Array<string>) => {
+        let fileSystem = files;
+        setCurrent(fileSystem);
+    };
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
     const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import Window from './Window';
 import StaticWindow from './StaticWindow';
 import Tabs from './Tabs';
 import styles from './Terminal.module.css';
 
-const Terminal = () => {
+const Terminal = (): ReactElement => {
     return (
         <div className={styles.terminal}>
             <div className={styles.windowBar}>

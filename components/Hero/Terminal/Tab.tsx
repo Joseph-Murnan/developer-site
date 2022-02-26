@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, ReactElement } from 'react';
 
 interface Props {
     title: string;
@@ -6,7 +6,7 @@ interface Props {
     setOpenTab: (index: number) => void;
 }
 
-const Tab = (props: Props) => {
+const Tab = (props: Props): ReactElement => {
     const title = props.title;
     const setOpenTab = props.setOpenTab;
     const index = props.index;

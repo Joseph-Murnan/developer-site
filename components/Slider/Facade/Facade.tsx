@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
+import { Fragment, ReactElement } from 'react';
 import styles from '../Slider.module.css';
 
-const Facade = () => {
+const Facade = (): ReactElement => {
     const onDragStart = (e: React.DragEvent) => {
         const img = new Image();
         img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
