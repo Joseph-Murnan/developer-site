@@ -4,7 +4,7 @@ import TextSlice from './TextSlice';
 
 const Text = (): ReactElement => {
     return (
-        <div className={styles.textContainer}>
+        <div className={`${styles.textContainer} section`}>
             <TextSlice />
             <TextSlice />
         </div>

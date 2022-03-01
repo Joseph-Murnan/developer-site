@@ -5,7 +5,7 @@ import styles from './Hero.module.css';
 
 const Hero = (): ReactElement => {
     return (
-        <div className={styles.hero}>
+        <div className={`${styles.hero} section`}>
             <Decoration />
             <Terminal />
         </div>

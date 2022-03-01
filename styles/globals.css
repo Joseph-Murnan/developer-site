@@ -84,6 +84,9 @@ html, body {
   margin: 0;
   font-family: 'Merriweather Sans', sans-serif; }
 
+body {
+  background-color: #1e1e1e; }
+
 #__next {
   overflow: hidden; }
 
@@ -95,16 +98,25 @@ ul {
     margin: 0;
     padding: 0; }
 
-body {
-  background-color: #1e1e1e; }
-
 a {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+  transition: 0.2s; }
+
+p {
+  margin: 0px 0px 3px 0px; }
 
 input, button {
   -webkit-appearance: none;
   border: 0; }
+
+.container {
+  max-width: 1500px;
+  padding: 0 15px;
+  margin: auto; }
+
+.section {
+  font-size: 17px; }
 
 .grid {
   display: grid;
@@ -114,6 +126,31 @@ input, button {
 .centre {
   display: flex;
   justify-content: center; }
+
+footer {
+  background: #1e1e1e;
+  border-width: 1px 0px 0px 0px;
+  border-style: solid;
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+  padding: 30px 0;
+  position: relative;
+  z-index: 1;
+  color: white; }
+  footer .dividerContainer {
+    display: flex;
+    align-items: center; }
+    footer .dividerContainer .name {
+      flex-grow: 1; }
+    footer .dividerContainer .divider {
+      height: 1px;
+      width: 85%;
+      background: rgba(255, 255, 255, 0.75);
+      margin-left: 20px; }
+  footer .linkContainer {
+    margin-top: -15px;
+    text-align: right; }
+    footer .linkContainer a {
+      margin-left: 15px; }
 
 .theme.background.blueTheme {
   background-color: #197dff; }
@@ -127,5 +164,24 @@ input, button {
   border-left-color: #9b1616; }
 .theme.hover:hover.border-left.purpleTheme {
   border-left-color: #8506da; }
+.theme.trim.blueTheme {
+  border-color: #197dff; }
+.theme.trim.redTheme {
+  border-color: #9b1616; }
+.theme.trim.purpleTheme {
+  border-color: #8506da; }
+.theme.links.blueTheme a:hover {
+  color: #197dff; }
+.theme.links.redTheme a:hover {
+  color: #9b1616; }
+.theme.links.purpleTheme a:hover {
+  color: #8506da; }
+
+@media (max-width: 1500px) {
+  .container {
+    max-width: 95%; }
+
+  .section {
+    font-size: 16px; } }
 
 /*# sourceMappingURL=globals.css.map */
