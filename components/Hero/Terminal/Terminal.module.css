@@ -1,11 +1,10 @@
 .terminal {
     display:inline-block;
     width:400px;
-    background:#000000e6;
-    text-align:left;
+    background-color:#000000e6;
     margin-right:5%;
     height:180px;
-    animation:fadeDelay 1.5s ease;
+    animation:fadeDelay 1.7s ease;
     border-radius:5px;
     direction:ltr;
     overflow:hidden;
@@ -13,7 +12,8 @@
     z-index:2;
     color:whitesmoke;
     border:1px solid #272729;
-    position:relative;
+    position:absolute;
+    top:calc(50% - 50px);
 }
 
 .windowBar, .tab {

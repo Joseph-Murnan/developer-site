@@ -4,7 +4,7 @@ import Theme from '../../store/theme';
 const Footer = (): ReactElement => {
     const themeContext = useContext(Theme);
     return (
-        <footer className={`theme trim ${themeContext.theme} section links`}>
+        <footer className={`theme ${themeContext.theme} section links`}>
             <div className="container">
                 <div className="dividerContainer">
                     <div className="name">

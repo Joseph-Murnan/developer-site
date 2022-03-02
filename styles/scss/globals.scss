@@ -12,7 +12,7 @@ html, body {
     font-family:'Merriweather Sans', sans-serif;
 }
 body {
-    background-color:rgb(30, 30, 30);
+    background-color:$black;
 }
 #__next {
     overflow:hidden;
@@ -58,14 +58,13 @@ input, button {
     justify-content:center;
 }
 footer {
-    background:#1e1e1e;
-    border-width:1px 0px 0px 0px;
-    border-style:solid;
-    box-shadow:0px 0px 7px 0px rgba(0, 0, 0, 0.3);
-    padding:30px 0;
+    background-color:$black;
+    // border-width:1px 0px 0px 0px;
+    // border-style:solid;
+    padding:25px 0 20px 0;
     position:relative;
     z-index:1;
-    color:white;
+    color:$offwhite;
     .dividerContainer {
         display:flex;
         align-items:center;
@@ -75,15 +74,16 @@ footer {
         .divider {
             height:1px;
             width:85%;
-            background:rgba(255, 255, 255, 0.75);
+            // background-color:#abaaaa;
             margin-left:20px;
+            background-image:linear-gradient(to right, #ffffff70 0, #ffffff85 10%, #ffffff95 33%, #ffffff95 66%, #ffffff85 90%, #ffffff70 100%);
         }
     }
     .linkContainer {
         margin-top:-15px;
         text-align:right;
         a {
-            margin-left:15px;
+            margin-left:20px;
         }
     }
 }
