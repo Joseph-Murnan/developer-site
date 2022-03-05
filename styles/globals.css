@@ -129,6 +129,7 @@ input, button {
 
 footer {
   background-color: #1e1e1e;
+  border-top: 1px solid #2d2d2d;
   padding: 25px 0 20px 0;
   position: relative;
   z-index: 1;
@@ -141,10 +142,9 @@ footer {
     footer .dividerContainer .divider {
       height: 1px;
       width: 85%;
-      margin-left: 20px;
-      background-image: linear-gradient(to right, #ffffff70 0, #ffffff85 10%, #ffffff95 33%, #ffffff95 66%, #ffffff85 90%, #ffffff70 100%); }
+      background-image: linear-gradient(to right, #ffffff65 0, #ffffff82 10%, #ffffff95 33%, #ffffff95 66%, #ffffff82 90%, #ffffff65 100%); }
   footer .linkContainer {
-    margin-top: -15px;
+    margin-top: -14px;
     text-align: right; }
     footer .linkContainer a {
       margin-left: 20px; }
@@ -180,5 +180,16 @@ footer {
 
   .section {
     font-size: 16px; } }
+@media (max-width: 1300px) {
+  footer .dividerContainer .divider {
+    width: 75%; } }
+@media (max-width: 767px) {
+  footer .dividerContainer {
+    flex-wrap: wrap; }
+    footer .dividerContainer .divider {
+      margin: 7px 0;
+      width: 100%; }
+  footer .linkContainer {
+    margin-top: 0; } }
 
 /*# sourceMappingURL=globals.css.map */
