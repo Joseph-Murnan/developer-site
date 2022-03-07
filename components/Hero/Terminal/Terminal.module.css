@@ -1,20 +1,20 @@
 .terminal {
     display:inline-block;
-    width:400px;
-    background-color:#000000e6;
+    width:410px;
+    background-color:#161616e6;
     margin-right:5%;
-    height:180px;
+    height:220px;
     animation:fadeDelay 1.7s ease;
     border-radius:5px;
     direction:ltr;
     overflow:hidden;
-    box-shadow:2px 0px 5px 0px rgba(0, 0, 0, 0.55);
+    box-shadow:2px 1px 7px 0px rgba(0, 0, 0, 0.7);
     z-index:2;
     color:whitesmoke;
     border:1px solid #272729;
     position:absolute;
-    top:calc(50% - 50px);
-    font-size:17px;
+    top:calc(50% - 90px);
+    font-size:16px;
 }
 
 .windowBar, .tab {
@@ -24,37 +24,51 @@
 }
 
 .windowBar {
-    background-color:#272729;
+    background-color:#363636;
     font-size:14px;
     height:13%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .tabList {
-    height:16%;
+    height:13%;
+    display:flex;
 }
 
 .tab {
     display:inline-block;
+    /* background-color:#1d1d1d; */
+    /* border-left:1px solid #3a3b3d; */
+    flex-grow:1;
+}
+
+.tab a {
+    display:block;
     padding:3px 15px;
-    background:#303031;
-    border-left:1px solid #3a3b3d;
     cursor:pointer;
+}
+
+.active {
+    background-color:#363636;
 }
 
 .textContainer {
     font-family:monospace;
-    height:71%;
+    height:74%;
+    position:relative;
 }
 
 .user {
-    position:relative;
+    /* position:relative; */
     margin:0px 0px 0px 14px;
 }
 
 .user::before {
     content:'joseph$';
     position:absolute;
-    left:0;
+    left:9px;
     top:8px;
 }
 
@@ -62,12 +76,13 @@
     background:transparent;
     width:100%;
     height:100%;
-    padding:8px 10px 0 90px;
+    padding:8px 10px 0 80px;
     color:white;
     border:0;
     resize:none;
     overflow-y:scroll;
     caret-color:transparent;
+    word-spacing:-1px;
 }
 
 .terminalContent::-webkit-scrollbar {
@@ -87,11 +102,12 @@
 .terminalContent::after {
     content:'';
     position:absolute;
-    width:9px;
-    height:4px;
-    margin-top:15px;
-    background:#fffffff2;
-    animation: blink 1.25s infinite ease;
+    width:6px;
+    height:15px;
+    margin-top:3px;
+    margin-left:4px;
+    background-color:#fffffff2;
+    animation: blink 1.5s infinite ease;
 }
 
 @keyframes blink {
