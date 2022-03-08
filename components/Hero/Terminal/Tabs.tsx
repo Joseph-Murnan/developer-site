@@ -13,7 +13,7 @@ const Tabs = (props: Props): ReactElement => {
         <Fragment>
             <ul className={styles.tabList}>
                 { windows.map((item, index) => 
-                    <li key={index} className={`${styles.tab} ` + (index == openTab && `${styles.active}`)}>
+                    <li key={index} className={`${styles.tab} ` + (index == openTab ? `${styles.active}` : `${styles.inactive}`)}>
                         <Tab title={item.props.title} index={index} setOpenTab={setOpenTab} />
                     </li>
                 ) }

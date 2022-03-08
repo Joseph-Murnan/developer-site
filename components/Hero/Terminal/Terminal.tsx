@@ -8,7 +8,12 @@ const Terminal = (): ReactElement => {
     return (
         <div className={styles.terminal}>
             <div className={styles.windowBar}>
-                <span>Joseph</span>
+                <div className={styles.btnContainer}>
+                    <button className={styles.close}></button>
+                    <button className={styles.minimise}></button>
+                    <button className={styles.maximise}></button>
+                </div>
+                <span className={styles.terminalStatus}>Joseph</span>
             </div>
             <Tabs>
                 <StaticWindow title="window1" />
