@@ -83,13 +83,13 @@ const Window = (props: Props): ReactElement => {
         }
     }, []);
     const searchFolders = (folder: Directory): DirectorySearchResponse => {
-        let current: boolean = folder['current'];
+        const current: boolean = folder['current'];
         loopCounter++;
         if(current) {
             setActive(folder);
             return { 'success': true, 'folder': folder };
         } else if(current === false && loopCounter <= loopLimit) {
-            let subdirectories = Object.values(folder).filter(f => (typeof f === 'object' && f.type === 'directory') && f);
+            const subdirectories = Object.values(folder).filter(f => (typeof f === 'object' && f.type === 'directory') && f);
             subdirectories.length > 0 && subdirectories.find(s => searchFolders(s)['success']);
         }
         return { 'success': false, 'folder': folder };
@@ -106,7 +106,7 @@ const Window = (props: Props): ReactElement => {
     const handleCommandNotFound = (segments: Array<string>) => {};
     const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
-        let input: string = e.key;
+        const input: string = e.key;
         if(keystrokes.includes(input)) {
             let prevState: string = writtenText;
             setWrittenText(prevState += input);
@@ -116,10 +116,10 @@ const Window = (props: Props): ReactElement => {
         } else if(input === 'Enter') {
             let commandType: string;
             let prevState: string = writtenText;
-            let segments: Array<string> = prevState.split(' ');
+            const segments: Array<string> = prevState.split(' ');
             if(segments.length > 0) {
                 commandType = segments[0];
-                let command = getCommand(commandType);
+                const command = getCommand(commandType);
                 command && command(segments);
             }
         }
