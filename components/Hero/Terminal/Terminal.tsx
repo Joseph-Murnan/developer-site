@@ -13,7 +13,11 @@ const Terminal = (): ReactElement => {
                     <button className={styles.minimise}></button>
                     <button className={styles.maximise}></button>
                 </div>
-                <span className={styles.terminalStatus}>Joseph</span>
+                <div className={`${styles.terminalStatus} ${styles.folderDefaults}`}>
+                    <span className={`${styles.folderBack} ${styles.folderDefaults}`}></span>
+                    <span className={`${styles.folderTab} ${styles.folderDefaults}`}></span>
+                    Joseph
+                </div>
             </div>
             <Tabs>
                 <StaticWindow title="window1" />
