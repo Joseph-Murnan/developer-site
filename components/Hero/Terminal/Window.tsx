@@ -108,15 +108,12 @@ const Window = (props: Props): ReactElement => {
         e.preventDefault();
         const input: string = e.key;
         if(keystrokes.includes(input)) {
-            let prevState: string = writtenText;
-            setWrittenText(prevState += input);
+            setWrittenText(prevState => prevState += input);
         } else if(input === 'Backspace') {
-            let prevState: string = writtenText;
-            setWrittenText(prevState.slice(0, -1));
+            setWrittenText(prevState => prevState.slice(0, -1));
         } else if(input === 'Enter') {
             let commandType: string;
-            let prevState: string = writtenText;
-            const segments: Array<string> = prevState.split(' ');
+            const segments: Array<string> = writtenText.split(' ');
             if(segments.length > 0) {
                 commandType = segments[0];
                 const command = getCommand(commandType);
