@@ -46,6 +46,7 @@ const terminalText: Array<string> = ['textOne', 'textTwo'];
 let timer: ReturnType<typeof setTimeout>;
 const loopLimit: number = 99;
 let loopCounter: number = 0;
+const defaultPreviousLines: Array<string> = [];
 
 const Window = (props: Props): ReactElement => {
     const [terminalLock, setTerminalLock] = useState(true);
@@ -53,6 +54,7 @@ const Window = (props: Props): ReactElement => {
     const importedFiles: FileSystem = fs;
     const [files, setFiles] = useState(importedFiles);
     const [active, setActive] = useState(defaultActiveState);
+    const [previousLines, setPreviousLines] = useState(defaultPreviousLines);
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
         letter = terminalText[count].slice(0, ++index);
@@ -113,16 +115,23 @@ const Window = (props: Props): ReactElement => {
             setWrittenText(prevState => prevState.slice(0, -1));
         } else if(input === 'Enter') {
             let commandType: string;
+            const text = writtenText;
+            setPreviousLines(prevState => {
+                prevState.push(text);
+                return prevState;
+            });
+            // ^ runs twice on development server due to react strict mode
             const segments: Array<string> = writtenText.split(' ');
             if(segments.length > 0) {
                 commandType = segments[0];
                 const command = getCommand(commandType);
                 command && command(segments);
             }
+            setWrittenText('');
         }
     };
     useEffect(() => {
-        writtenText === '' && write();
+        (writtenText === '' && loopCounter === 0) && write();
         return () => {
             // setWrittenText('');
             clearTimeout(timer);
@@ -131,9 +140,14 @@ const Window = (props: Props): ReactElement => {
     return (
         <div className={styles.textContainer}>
             <p className={styles.user}></p>
-            <div className={styles.terminalContent} 
-            contentEditable={true} suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
-            onKeyDown={e => !terminalLock && keyDown(e)}>{writtenText}</div>
+            <div className={styles.terminalContent}>
+                { previousLines.map((p, index) => <div key={index}>{ p }</div>) }
+                <div className={styles.currentLine} contentEditable={true}
+                    suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
+                    onKeyDown={e => !terminalLock && keyDown(e)}>
+                    {writtenText}
+                </div>
+            </div>
         </div>
     );
 }
