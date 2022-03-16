@@ -4,8 +4,10 @@ import { Directory, FileSystem } from '../../../store/types';
 
 interface Props {
     title: string;
+    name: string;
     files: FileSystem;
-    setFiles: React.Dispatch<React.SetStateAction<FileSystem>>
+    setFiles: React.Dispatch<React.SetStateAction<FileSystem>>;
+    date: string;
 };
 
 const defaultActiveState: Directory = {
@@ -118,7 +120,7 @@ const Window = (props: Props): ReactElement => {
     return (
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
-                <div className={`${styles.lastLogin}`}>Last login: Wed Mar 16 12:00:00 on ttys000</div>
+                <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ props.date }</span> on ttys000</div>
                 { previousLines.map((p, index) => <div className={`${styles.line} ${styles.prependUser}`} key={index}><span>{ p }</span></div>) }
                 <div className={`${styles.line} ${styles.currentLine} ${styles.prependUser}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.

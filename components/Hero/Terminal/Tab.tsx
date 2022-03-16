@@ -11,7 +11,7 @@ const Tab = (props: Props): ReactElement => {
     const setOpenTab = props.setOpenTab;
     const index = props.index;
     const onClick = useCallback(() => setOpenTab(index), [setOpenTab, index]);
-    return <a onClick={onClick}>{title}</a>;
+    return <a onClick={ onClick }>{ title }</a>;
 }
 
 export default Tab;

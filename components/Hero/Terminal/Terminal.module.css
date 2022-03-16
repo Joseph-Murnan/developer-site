@@ -80,9 +80,19 @@
 }
 
 .tabList {
-    height:13%;
+    transition:0.09s;
     display:flex;
-    border-bottom:1px solid rgb(25, 25, 25);
+}
+
+.tabList.show {
+    height:13%;
+    opacity:1;
+}
+
+.tabList.hide {
+    height:0px;
+    overflow:hidden;
+    opacity:0;
 }
 
 .tab {
@@ -117,6 +127,7 @@
     /* font-family:monospace; */
     height:74%;
     position:relative;
+    border-bottom:1px solid rgb(25, 25, 25);
 }
 
 .lastLogin {
