@@ -1,28 +1,11 @@
 import { useEffect, useState, useCallback, ReactElement } from 'react';
 import styles from './Terminal.module.css';
-import fs from '../../../store/fs.json';
-
-interface FileSystem {
-    [key: string]: Directory;
-}
-
-interface Directory {
-    name: string;
-    current: boolean;
-    type: string;
-};
-
-interface DirectorySearchResponse {
-    success: boolean;
-    folder: Directory;
-};
+import { Directory, FileSystem } from '../../../store/types';
 
 interface Props {
     title: string;
-};
-
-interface CommandSet {
-    [key: string]: Function
+    files: FileSystem;
+    setFiles: React.Dispatch<React.SetStateAction<FileSystem>>
 };
 
 const defaultActiveState: Directory = {
@@ -49,10 +32,7 @@ let loopCounter: number = 0;
 const defaultPreviousLines: Array<string> = [];
 
 const Window = (props: Props): ReactElement => {
-    const [terminalLock, setTerminalLock] = useState(true);
     const [writtenText, setWrittenText] = useState('');
-    const importedFiles: FileSystem = fs;
-    const [files, setFiles] = useState(importedFiles);
     const [active, setActive] = useState(defaultActiveState);
     const [previousLines, setPreviousLines] = useState(defaultPreviousLines);
     const write = useCallback(() => {
@@ -61,7 +41,6 @@ const Window = (props: Props): ReactElement => {
         setWrittenText(letter);
         if(letter.length === terminalText[count].length) {
             if(terminalText.indexOf(terminalText[count]) == (terminalText.length - 1)) {
-                setTerminalLock(false);
                 clearTimeout(timer);
                 return;
             }
@@ -74,7 +53,7 @@ const Window = (props: Props): ReactElement => {
         timer = setTimeout(write, timeout);
     }, []);
     const getCommand = useCallback((commandType: string) => {
-        const commandTypes: CommandSet = {
+        const commandTypes: { [key: string]: Function } = {
             'cd': changeDirectory,
             'ls': list
         };
@@ -84,7 +63,7 @@ const Window = (props: Props): ReactElement => {
             return handleCommandNotFound;
         }
     }, []);
-    const searchFolders = (folder: Directory): DirectorySearchResponse => {
+    const searchFolders = (folder: Directory): { success: boolean, folder: Directory } => {
         const current: boolean = folder['current'];
         loopCounter++;
         if(current) {
@@ -101,8 +80,7 @@ const Window = (props: Props): ReactElement => {
         Object.values(fileSystem).forEach(f => searchFolders(f));
     };
     const changeDirectory = (segments: Array<string>) => {
-        let fileSystem = files;
-        setCurrent(fileSystem);
+        setCurrent(props.files);
     };
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
@@ -139,13 +117,13 @@ const Window = (props: Props): ReactElement => {
     }, []);
     return (
         <div className={styles.textContainer}>
-            <p className={styles.user}></p>
             <div className={styles.terminalContent}>
-                { previousLines.map((p, index) => <div key={index}>{ p }</div>) }
-                <div className={styles.currentLine} contentEditable={true}
+                <div className={`${styles.lastLogin}`}>Last login: Wed Mar 16 12:00:00 on ttys000</div>
+                { previousLines.map((p, index) => <div className={`${styles.line} ${styles.prependUser}`} key={index}><span>{ p }</span></div>) }
+                <div className={`${styles.line} ${styles.currentLine} ${styles.prependUser}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
-                    onKeyDown={e => !terminalLock && keyDown(e)}>
-                    {writtenText}
+                    onKeyDown={e => keyDown(e)}>
+                    <span>{writtenText}</span>
                 </div>
             </div>
         </div>

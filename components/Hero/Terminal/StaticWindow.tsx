@@ -8,9 +8,9 @@ interface Props {
 const StaticWindow = (props: Props): ReactElement => {
     return (
         <div className={styles.textContainer}>
-            <p className={styles.user}></p>
             <div className={styles.terminalContent}>
-                Static Text
+                <div className={`${styles.lastLogin}`}>Last login: Wed Mar 16 12:00:00 on console</div>
+                <div className={`${styles.line} ${styles.prependUser}`}>Static Text</div>
             </div>
         </div>
     );

@@ -1,10 +1,26 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import Window from './Window';
 import StaticWindow from './StaticWindow';
 import Tabs from './Tabs';
 import styles from './Terminal.module.css';
+import fs from '../../../store/fs.json';
+import { FileSystem } from '../../../store/types';
 
 const Terminal = (): ReactElement => {
+    const importedFiles: FileSystem = fs;
+    const [files, setFiles] = useState(importedFiles);
+    const [openTabs, setOpenTabs] = useState([
+        {
+            id: 0,
+            type: 'static',
+            title: 'window1'
+        },
+        {
+            id: 1,
+            type: 'interactive',
+            title: 'window2'
+        }
+    ]);
     return (
         <div className={styles.terminal}>
             <div className={styles.windowBar}>
@@ -20,8 +36,15 @@ const Terminal = (): ReactElement => {
                 </div>
             </div>
             <Tabs>
-                <StaticWindow title="window1" />
-                <Window title="window2" />
+                {
+                    openTabs.map((t: { id: number, type: string, title: string }): ReactElement => {
+                        if(t.type == 'interactive') {
+                            return <Window key={t.id} files={files} setFiles={setFiles} title={t.title} />
+                        } else {
+                            return <StaticWindow key={t.id} title={t.title} />
+                        }
+                    })
+                }
             </Tabs>
         </div>
     );
