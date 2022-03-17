@@ -13,7 +13,8 @@ interface Props {
 const defaultActiveState: Directory = {
     name: 'developer-site',
     current: true,
-    type: 'directory'
+    type: 'directory',
+    path: '~/documents/sites/developer-site'
 };
 
 const keystrokes: Array<string> = [
@@ -89,25 +90,28 @@ const Window = (props: Props): ReactElement => {
     const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         const input: string = e.key;
-        if(keystrokes.includes(input)) {
-            setWrittenText(prevState => prevState += input);
-        } else if(input === 'Backspace') {
-            setWrittenText(prevState => prevState.slice(0, -1));
-        } else if(input === 'Enter') {
-            let commandType: string;
-            const text = writtenText;
-            setPreviousLines(prevState => {
-                prevState.push(text);
-                return prevState;
-            });
-            // ^ runs twice on development server due to react strict mode
-            const segments: Array<string> = writtenText.split(' ');
-            if(segments.length > 0) {
-                commandType = segments[0];
-                const command = getCommand(commandType);
-                command && command(segments);
-            }
-            setWrittenText('');
+        switch(true) {
+            case keystrokes.includes(input):
+                setWrittenText(prevState => prevState += input);
+                break;
+            case input === 'Backspace':
+                setWrittenText(prevState => prevState.slice(0, -1));
+                break;
+            case input === 'Enter':
+                const text = writtenText;
+                setPreviousLines(prevState => {
+                    prevState.push(text); // <-- runs twice on development server due to react strict mode
+                    return prevState;
+                });
+                const segments: Array<string> = writtenText.split(' ');
+                if(segments.length > 0) {
+                    const command = getCommand(segments[0]);
+                    command && command(segments);
+                }
+                setWrittenText('');
+                break;
+            default:
+                break;
         }
     };
     useEffect(() => {
@@ -121,11 +125,15 @@ const Window = (props: Props): ReactElement => {
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
                 <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ props.date }</span> on ttys000</div>
-                { previousLines.map((p, index) => <div className={`${styles.line} ${styles.prependUser}`} key={index}><span>{ p }</span></div>) }
-                <div className={`${styles.line} ${styles.currentLine} ${styles.prependUser}`} contentEditable={true}
+                { previousLines.map((p, index) => 
+                    <div className={`${styles.line}`} key={index}>
+                        <span className={styles.prependLine}>Joseph$ { active.name } %</span><span>{ p }</span>
+                    </div>
+                ) }
+                <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
                     onKeyDown={e => keyDown(e)}>
-                    <span>{writtenText}</span>
+                    <span className={styles.prependLine}>Joseph$ { active.name } %</span><span>{writtenText}</span>
                 </div>
             </div>
         </div>

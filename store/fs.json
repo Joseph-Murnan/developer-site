@@ -1,19 +1,23 @@
 {
     "desktop": {
         "name": "desktop",
+        "path": "~/desktop",
         "type": "directory",
         "current": false
     },
     "documents": {
         "name": "documents",
+        "path": "~/documents",
         "type": "directory",
         "current": false,
         "sites": {
             "name": "sites",
+            "path": "/documents/sites",
             "type": "directory",
             "current": false,
             "developer-site": {
                 "name": "developer-site",
+                "path": "/documents/sites/developer-site",
                 "type": "directory",
                 "current": true
             }

@@ -1,9 +1,9 @@
 .terminal {
     display:inline-block;
-    width:430px;
+    width:450px;
     background-color:#1e1e1e;
     margin-right:5%;
-    height:235px;
+    height:255px;
     animation:fadeDelay 1.7s ease;
     border-radius:9px;
     direction:ltr;
@@ -16,7 +16,7 @@
     font-size:14px;
     border:1px solid #80808067;
     font-family:'Lucida Sans Unicode', Verdana, sans-serif;
-    word-spacing:2px;
+    word-spacing:1px;
 }
 
 .windowBar, .tab {
@@ -123,6 +123,11 @@
     color:#7c7c7c;
 }
 
+.prependLine {
+    margin-right:7px;
+    white-space:nowrap;
+}
+
 .textContainer {
     /* font-family:monospace; */
     height:74%;
@@ -132,17 +137,6 @@
 
 .lastLogin {
     padding-left:7px;
-}
-
-.prependUser {
-    position:relative;
-}
-
-.prependUser::before {
-    content:'Joseph$';
-    position:absolute;
-    left:8px;
-    top:0px;
 }
 
 .terminalContent {
@@ -156,7 +150,7 @@
 }
 
 .terminalContent .line {
-    padding-left:70px;
+    padding-left:7px;
 }
 
 .terminalContent::-webkit-scrollbar {

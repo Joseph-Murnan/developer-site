@@ -12,7 +12,9 @@ const StaticWindow = (props: Props): ReactElement => {
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
                 <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ props.date }</span> on console</div>
-                <div className={`${styles.line} ${styles.prependUser}`}>Static Text</div>
+                <div className={`${styles.line}`}>
+                    <span className={styles.prependLine}>Joseph$ ~ %</span><span>Static Text</span>
+                </div>
             </div>
         </div>
     );
