@@ -3,23 +3,29 @@
         "name": "desktop",
         "path": "~/desktop",
         "type": "directory",
-        "current": false
+        "current": false,
+        "subfolders": {}
     },
     "documents": {
         "name": "documents",
         "path": "~/documents",
         "type": "directory",
         "current": false,
-        "sites": {
-            "name": "sites",
-            "path": "/documents/sites",
-            "type": "directory",
-            "current": false,
-            "developer-site": {
-                "name": "developer-site",
-                "path": "/documents/sites/developer-site",
+        "subfolders": {
+            "sites": {
+                "name": "sites",
+                "path": "/documents/sites",
                 "type": "directory",
-                "current": true
+                "current": false,
+                "subfolders": {
+                    "developer-site": {
+                        "name": "developer-site",
+                        "path": "/documents/sites/developer-site",
+                        "type": "directory",
+                        "current": false,
+                        "subfolders": {}
+                    }
+                }
             }
         }
     }

@@ -1,20 +1,23 @@
-import { useEffect, useState, useCallback, ReactElement } from 'react';
+import { useEffect, useState, useCallback, ReactElement, Dispatch, SetStateAction, KeyboardEvent } from 'react';
 import styles from './Terminal.module.css';
-import { Directory, FileSystem } from '../../../store/types';
+import { Directory, Subfolder, Tab } from '../../../store/types';
 
 interface Props {
     title: string;
     name: string;
-    files: FileSystem;
-    setFiles: React.Dispatch<React.SetStateAction<FileSystem>>;
+    files: Subfolder;
+    setFiles: Dispatch<SetStateAction<Subfolder>>;
     date: string;
+    tab: Tab,
+    setTabs: Dispatch<SetStateAction<Tab[]>>
 };
 
 const defaultActiveState: Directory = {
-    name: 'developer-site',
-    current: true,
-    type: 'directory',
-    path: '~/documents/sites/developer-site'
+    'name': 'developer-site',
+    'path': '/documents/sites/developer-site',
+    'type': 'directory',
+    'current': false,
+    'subfolders': {}
 };
 
 const keystrokes: Array<string> = [
@@ -31,8 +34,17 @@ let timeout: number;
 const terminalText: Array<string> = ['textOne', 'textTwo'];
 let timer: ReturnType<typeof setTimeout>;
 const loopLimit: number = 99;
-let loopCounter: number = 0;
 const defaultPreviousLines: Array<string> = [];
+
+const routeToCurrent = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<{} | undefined> => {
+    return Object.values(subfolders).map((folder: Directory) => {
+        if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i]) {
+            return folder;
+        } else if(Object.values(folder.subfolders).length > 0 && i < loopLimit) {
+            return routeToCurrent(folder.subfolders, pathSegments, i + 1).filter(Boolean)[0];
+        }
+    })
+}
 
 const Window = (props: Props): ReactElement => {
     const [writtenText, setWrittenText] = useState('');
@@ -66,28 +78,12 @@ const Window = (props: Props): ReactElement => {
             return handleCommandNotFound;
         }
     }, []);
-    const searchFolders = (folder: Directory): { success: boolean, folder: Directory } => {
-        const current: boolean = folder['current'];
-        loopCounter++;
-        if(current) {
-            setActive(folder);
-            return { 'success': true, 'folder': folder };
-        } else if(current === false && loopCounter <= loopLimit) {
-            const subdirectories = Object.values(folder).filter(f => (typeof f === 'object' && f.type === 'directory') && f);
-            subdirectories.length > 0 && subdirectories.find(s => searchFolders(s)['success']);
-        }
-        return { 'success': false, 'folder': folder };
-    };
-    const setCurrent = (fileSystem: FileSystem) => {
-        loopCounter = 0;
-        Object.values(fileSystem).forEach(f => searchFolders(f));
-    };
-    const changeDirectory = (segments: Array<string>) => {
-        setCurrent(props.files);
+    const changeDirectory = () => {
+        const activeFolder = routeToCurrent(props.files, active.path.split('/'), 1).filter(Boolean)[0];
     };
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
-    const keyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const keyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         const input: string = e.key;
         switch(true) {
@@ -115,7 +111,7 @@ const Window = (props: Props): ReactElement => {
         }
     };
     useEffect(() => {
-        (writtenText === '' && loopCounter === 0) && write();
+        writtenText === '' && write();
         return () => {
             // setWrittenText('');
             clearTimeout(timer);
