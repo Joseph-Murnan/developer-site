@@ -13,8 +13,8 @@ interface Props {
 };
 
 const defaultActiveState: Directory = {
-    'name': 'developer-site',
-    'path': '/documents/sites/developer-site',
+    'name': 'sites',
+    'path': '/documents/sites',
     'type': 'directory',
     'current': false,
     'subfolders': {}
@@ -36,14 +36,28 @@ let timer: ReturnType<typeof setTimeout>;
 const loopLimit: number = 99;
 const defaultPreviousLines: Array<string> = [];
 
-const routeToCurrent = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<{} | undefined> => {
+const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<{} | undefined> => {
     return Object.values(subfolders).map((folder: Directory) => {
-        if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i]) {
+        if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i] && pathSegments.length === (i + 1)) {
             return folder;
         } else if(Object.values(folder.subfolders).length > 0 && i < loopLimit) {
-            return routeToCurrent(folder.subfolders, pathSegments, i + 1).filter(Boolean)[0];
+            return routeToFolder(folder.subfolders, pathSegments, i + 1).filter(Boolean)[0];
         }
     })
+}
+
+const constructPath = (activePath: Array<string>, targetPath: Array<string>) => {
+    targetPath.forEach(p => {
+        switch(p) {
+            case '..':
+                activePath.pop();
+                break;
+            default:
+                activePath.push(p);
+                break;
+        }
+    })
+    return activePath;
 }
 
 const Window = (props: Props): ReactElement => {
@@ -78,8 +92,10 @@ const Window = (props: Props): ReactElement => {
             return handleCommandNotFound;
         }
     }, []);
-    const changeDirectory = () => {
-        const activeFolder = routeToCurrent(props.files, active.path.split('/'), 1).filter(Boolean)[0];
+    const changeDirectory = (segments: Array<string>) => {
+        const targetPath = segments[1].split('/');
+        const newPath = constructPath(active.path.split('/'), targetPath);
+        const newFolder = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
     };
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
@@ -99,7 +115,7 @@ const Window = (props: Props): ReactElement => {
                     prevState.push(text); // <-- runs twice on development server due to react strict mode
                     return prevState;
                 });
-                const segments: Array<string> = writtenText.split(' ');
+                const segments: Array<string> = text.split(' ');
                 if(segments.length > 0) {
                     const command = getCommand(segments[0]);
                     command && command(segments);
