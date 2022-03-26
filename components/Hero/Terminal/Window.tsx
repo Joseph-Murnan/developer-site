@@ -36,7 +36,7 @@ let timer: ReturnType<typeof setTimeout>;
 const loopLimit: number = 99;
 const defaultPreviousLines: Array<string> = [];
 
-const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<{} | undefined> => {
+const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
     return Object.values(subfolders).map((folder: Directory) => {
         if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i] && pathSegments.length === (i + 1)) {
             return folder;
@@ -91,12 +91,13 @@ const Window = (props: Props): ReactElement => {
         } else {
             return handleCommandNotFound;
         }
-    }, []);
-    const changeDirectory = (segments: Array<string>) => {
-        const targetPath = segments[1].split('/');
-        const newPath = constructPath(active.path.split('/'), targetPath);
-        const newFolder = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
-    };
+    }, [active]);
+    const changeDirectory = useCallback((segments: Array<string>) => {
+        const targetPath: Array<string> = segments[1].split('/');
+        const newPath: Array<string> = constructPath(active.path.split('/'), targetPath);
+        const newFolder: any = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
+        typeof newFolder == 'object' && setActive(newFolder);
+    }, [active]);
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
     const keyDown = (e: KeyboardEvent<HTMLDivElement>) => {

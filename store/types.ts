@@ -12,8 +12,8 @@ export interface Tab {
     name: string,
     title: string,
     date: Function,
-}
+};
 
 export interface Subfolder {
     [key: string]: Directory
-}
+};
