@@ -17,3 +17,21 @@ export interface Tab {
 export interface Subfolder {
     [key: string]: Directory
 };
+
+export enum ActionType {
+    BACKSPACE = "Backspace",
+    ENTER = "Enter",
+    WRITE = "Write",
+    SET = "Set"
+};
+
+export interface Window {
+    currentText:string;
+    active:Directory;
+    prevLines:Array<string>;
+};
+
+export interface WindowReducer {
+    type: ActionType | string;
+    payload: any;
+};

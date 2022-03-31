@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback, ReactElement, Dispatch, SetStateAction, KeyboardEvent } from 'react';
+import { useEffect, useCallback, ReactElement, Dispatch, SetStateAction, KeyboardEvent, useReducer, Reducer } from 'react';
 import styles from './Terminal.module.css';
-import { Directory, Subfolder, Tab } from '../../../store/types';
+import { Directory, Subfolder, Tab, ActionType, Window, WindowReducer } from '../../../store/types';
 
 interface Props {
     title: string;
@@ -34,7 +34,6 @@ let timeout: number;
 const terminalText: Array<string> = ['textOne', 'textTwo'];
 let timer: ReturnType<typeof setTimeout>;
 const loopLimit: number = 99;
-const defaultPreviousLines: Array<string> = [];
 
 const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
     return Object.values(subfolders).map((folder: Directory) => {
@@ -60,14 +59,32 @@ const constructPath = (activePath: Array<string>, targetPath: Array<string>) => 
     return activePath;
 }
 
+const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
+    switch(action.type) {
+        case ActionType.WRITE:
+            return { currentText: state.currentText + action.payload, active: state.active, prevLines: state.prevLines };
+        case ActionType.BACKSPACE:
+            let newText = '';
+            state.currentText.length > 0 && (newText = state.currentText.slice(0, -1));
+            return { currentText: newText, active: state.active, prevLines: state.prevLines };
+        case ActionType.ENTER:
+            let newActive = state.active;
+            action.payload.command && (newActive = action.payload.command(action.payload.segments));
+            return { currentText: '', active: (newActive ? newActive : state.active), prevLines: state.prevLines.concat(action.payload.text) };
+                                                                                            // ^ This is safe. concat() doesn't mutate the array it's called on.
+        case ActionType.SET:
+            return { currentText: action.payload, active: state.active, prevLines: state.prevLines };
+        default:
+            return state;
+    }
+};
+
 const Window = (props: Props): ReactElement => {
-    const [writtenText, setWrittenText] = useState('');
-    const [active, setActive] = useState(defaultActiveState);
-    const [previousLines, setPreviousLines] = useState(defaultPreviousLines);
+    const [window, dispatchText] = useReducer<Reducer<Window, WindowReducer>>(windowReducer, { currentText: '', prevLines: [], active: defaultActiveState });
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
         letter = terminalText[count].slice(0, ++index);
-        setWrittenText(letter);
+        dispatchText({ type:ActionType.SET, payload:letter });
         if(letter.length === terminalText[count].length) {
             if(terminalText.indexOf(terminalText[count]) == (terminalText.length - 1)) {
                 clearTimeout(timer);
@@ -91,62 +108,56 @@ const Window = (props: Props): ReactElement => {
         } else {
             return handleCommandNotFound;
         }
-    }, [active]);
+    }, [window.active]);
     const changeDirectory = useCallback((segments: Array<string>) => {
-        const targetPath: Array<string> = segments[1].split('/');
-        const newPath: Array<string> = constructPath(active.path.split('/'), targetPath);
-        const newFolder: any = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
-        typeof newFolder == 'object' && setActive(newFolder);
-    }, [active]);
+        if(segments && segments[1]) {
+            const targetPath: Array<string> = segments[1].split('/');
+            const newPath: Array<string> = constructPath(window.active.path.split('/'), targetPath);
+            const newFolder = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
+            if(newFolder) {
+                return newFolder;
+            } else {
+                return false;
+            }
+        }
+    }, [window.active]);
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
     const keyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault();
         const input: string = e.key;
-        switch(true) {
-            case keystrokes.includes(input):
-                setWrittenText(prevState => prevState += input);
-                break;
-            case input === 'Backspace':
-                setWrittenText(prevState => prevState.slice(0, -1));
-                break;
-            case input === 'Enter':
-                const text = writtenText;
-                setPreviousLines(prevState => {
-                    prevState.push(text); // <-- runs twice on development server due to react strict mode
-                    return prevState;
-                });
-                const segments: Array<string> = text.split(' ');
-                if(segments.length > 0) {
-                    const command = getCommand(segments[0]);
-                    command && command(segments);
-                }
-                setWrittenText('');
-                break;
-            default:
-                break;
+        if(keystrokes.includes(input)) {
+            dispatchText({ type:ActionType.WRITE, payload:input });
+        } else {
+            dispatchText({ type:input, payload:input });
+        }
+        if(input === 'Enter') {
+            const text = window.currentText;
+            const segments: Array<string> = window.currentText.split(' ');
+            if(segments.length > 0) {
+                const commandType = segments[0];
+                const command = getCommand(commandType);
+                command && dispatchText({ type:ActionType.ENTER, payload: { text, segments, command: command }});
+            }
         }
     };
     useEffect(() => {
-        writtenText === '' && write();
-        return () => {
-            // setWrittenText('');
-            clearTimeout(timer);
-        };
+        window.currentText === '' && write();
+        return () => clearTimeout(timer);
     }, []);
     return (
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
                 <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ props.date }</span> on ttys000</div>
-                { previousLines.map((p, index) => 
+                { window.prevLines.map((p: string, index: number) => 
                     <div className={`${styles.line}`} key={index}>
-                        <span className={styles.prependLine}>Joseph$ { active.name } %</span><span>{ p }</span>
+                        <span className={styles.prependLine}>Joseph$ { window.active.name } %</span><span>{ p }</span>
                     </div>
                 ) }
                 <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
                     onKeyDown={e => keyDown(e)}>
-                    <span className={styles.prependLine}>Joseph$ { active.name } %</span><span>{writtenText}</span>
+                    <span className={styles.prependLine}>Joseph$ { window.active.name } %</span><span>{ window.currentText }</span>
                 </div>
             </div>
         </div>
