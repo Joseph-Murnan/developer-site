@@ -1,6 +1,6 @@
-import { ReactElement, useState, useEffect, useCallback } from 'react';
-import Window from './Window';
-import StaticWindow from './StaticWindow';
+import { ReactElement, useState, useEffect } from 'react';
+import Window from './Window/Window';
+import StaticWindow from './Window/StaticWindow';
 import Tabs from './Tabs';
 import styles from './Terminal.module.css';
 import fs from '../../../store/fs.json';

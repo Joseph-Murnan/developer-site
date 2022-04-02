@@ -28,7 +28,7 @@ export enum ActionType {
 export interface Window {
     currentText:string;
     active:Directory;
-    prevLines:Array<string>;
+    prevLines:Array<Array<string>>;
 };
 
 export interface WindowReducer {

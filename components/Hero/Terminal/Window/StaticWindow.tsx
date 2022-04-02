@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styles from './Terminal.module.css';
+import styles from '../Terminal.module.css';
 
 interface Props {
     title: string;
