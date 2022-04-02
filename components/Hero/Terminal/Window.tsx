@@ -128,10 +128,7 @@ const Window = (props: Props): ReactElement => {
         const input: string = e.key;
         if(keystrokes.includes(input)) {
             dispatchText({ type:ActionType.WRITE, payload:input });
-        } else {
-            dispatchText({ type:input, payload:input });
-        }
-        if(input === 'Enter') {
+        } else if(input === 'Enter') {
             const text = window.currentText;
             const segments: Array<string> = window.currentText.split(' ');
             if(segments.length > 0) {
@@ -139,6 +136,8 @@ const Window = (props: Props): ReactElement => {
                 const command = getCommand(commandType);
                 command && dispatchText({ type:ActionType.ENTER, payload: { text, segments, command: command }});
             }
+        } else {
+            dispatchText({ type:input, payload:input });
         }
     };
     useEffect(() => {
