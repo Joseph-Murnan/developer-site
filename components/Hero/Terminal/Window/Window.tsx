@@ -10,7 +10,9 @@ interface Props {
     setFiles: Dispatch<SetStateAction<Subfolder>>;
     date: string;
     tab: Tab,
-    setTabs: Dispatch<SetStateAction<Tab[]>>
+    setTabs: Dispatch<SetStateAction<Tab[]>>,
+    constructPath: Function,
+    routeToFolder: Function
 };
 
 const defaultActiveState: Directory = {
@@ -34,31 +36,6 @@ let letter: string = '';
 let timeout: number;
 const terminalText: Array<string> = ['textOne', 'textTwo'];
 let timer: ReturnType<typeof setTimeout>;
-const loopLimit: number = 99;
-
-const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
-    return Object.values(subfolders).map((folder: Directory) => {
-        if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i] && pathSegments.length === (i + 1)) {
-            return folder;
-        } else if(Object.values(folder.subfolders).length > 0 && i < loopLimit) {
-            return routeToFolder(folder.subfolders, pathSegments, i + 1).filter(Boolean)[0];
-        }
-    })
-}
-
-const constructPath = (activePath: Array<string>, targetPath: Array<string>) => {
-    targetPath.forEach(p => {
-        switch(p) {
-            case '..':
-                activePath.pop();
-                break;
-            default:
-                activePath.push(p);
-                break;
-        }
-    })
-    return activePath;
-}
 
 const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
     switch(action.type) {
@@ -81,6 +58,7 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
 };
 
 const Window = (props: Props): ReactElement => {
+    const { constructPath, routeToFolder, date, files } = props;
     const [window, dispatchText] = useReducer<Reducer<Window, WindowReducer>>(windowReducer, { currentText: '', prevLines: [], active: defaultActiveState });
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
@@ -114,7 +92,7 @@ const Window = (props: Props): ReactElement => {
         if(segments && segments[1]) {
             const targetPath: Array<string> = segments[1].split('/');
             const newPath: Array<string> = constructPath(window.active.path.split('/'), targetPath);
-            const newFolder = routeToFolder(props.files, newPath, 1).filter(Boolean)[0];
+            const newFolder = routeToFolder(files, newPath, 1).filter(Boolean)[0];
             if(newFolder) {
                 return newFolder;
             } else {
@@ -148,7 +126,7 @@ const Window = (props: Props): ReactElement => {
     return (
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
-                <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ props.date }</span> on ttys000</div>
+                <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ date }</span> on ttys000</div>
                 <PreviousLines prevLines={window.prevLines} />
                 <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.

@@ -24,6 +24,14 @@
     text-align:center;
 }
 
+.showWindow {
+    display:block;
+}
+
+.hideWindow {
+    display:none;
+}
+
 .terminalStatus {
     color:#b2b2b2;
 }

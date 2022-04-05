@@ -4,7 +4,7 @@ import StaticWindow from './Window/StaticWindow';
 import Tabs from './Tabs';
 import styles from './Terminal.module.css';
 import fs from '../../../store/fs.json';
-import { Subfolder, Tab } from '../../../store/types';
+import { Subfolder, Tab, Directory } from '../../../store/types';
 
 const getDate = () => {
     const date = new Date();
@@ -12,21 +12,32 @@ const getDate = () => {
     return `${date.toDateString()} ${time}`;
 };
 
-const initialTab: Tab = {
-    id: 0,
-    type: 'static',
-    name: 'console',
-    title: 'window1',
-    date: getDate,
+const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
+    return Object.values(subfolders).map((folder: Directory) => {
+        if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i] && pathSegments.length === (i + 1)) {
+            return folder;
+        } else if(Object.values(folder.subfolders).length > 0 && i < 99) {
+            return routeToFolder(folder.subfolders, pathSegments, i + 1).filter(Boolean)[0];
+        }
+    })
 }
 
-const secondTab: Tab = {
-    id: 1,
-    type: 'interactive',
-    name: 'ttys000',
-    title: 'window2',
-    date: getDate
+const constructPath = (activePath: Array<string>, targetPath: Array<string>) => {
+    targetPath.forEach(p => {
+        switch(p) {
+            case '..':
+                activePath.pop();
+                break;
+            default:
+                activePath.push(p);
+                break;
+        }
+    })
+    return activePath;
 }
+
+const initialTab: Tab = { id: 0, type: 'static', name: 'console', title: 'window1', date: getDate }
+const secondTab: Tab = { id: 1, type: 'interactive', name: 'ttys000', title: 'window2', date: getDate }
 
 const Terminal = (): ReactElement => {
     const importedFiles: Subfolder = fs;
@@ -57,7 +68,7 @@ const Terminal = (): ReactElement => {
                 {
                     tabs.map((t: { id: number, type: string, title: string, date: Function, name: string }): ReactElement => {
                         if(t.type == 'interactive') {
-                            return <Window tab={t} setTabs={setTabs} name={t.name} date={t.date()} key={t.id} files={files} setFiles={setFiles} title={t.title} />
+                            return <Window constructPath={constructPath} routeToFolder={routeToFolder} tab={t} setTabs={setTabs} name={t.name} date={t.date()} key={t.id} files={files} setFiles={setFiles} title={t.title} />
                         } else {
                             return <StaticWindow name={t.name} date={t.date()} key={t.id} title={t.title} />
                         }
