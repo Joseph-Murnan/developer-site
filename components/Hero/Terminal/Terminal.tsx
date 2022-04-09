@@ -44,6 +44,13 @@ const Terminal = (): ReactElement => {
     const [files, setFiles] = useState(importedFiles);
     const [tabs, setTabs] = useState([initialTab]);
     const [openTab, setOpenTab] = useState(0);
+    const handleTabChange = (index: number, newTitle: string) => {
+        setTabs(prevState => {
+            const newState = [...prevState];
+            newState[index] = { ...newState[index], title: newTitle };
+            return newState;
+        });
+    }
     useEffect(() => {
         setTimeout(() => {
             setTabs(prevState => [...prevState, secondTab]);
@@ -66,11 +73,21 @@ const Terminal = (): ReactElement => {
             </div>
             <Tabs openTab={openTab} setOpenTab={setOpenTab}>
                 {
-                    tabs.map((t: { id: number, type: string, title: string, date: Function, name: string }): ReactElement => {
+                    tabs.map((t: { id: number, type: string, title: string, date: Function, name: string }, index: number): ReactElement => {
                         if(t.type == 'interactive') {
-                            return <Window constructPath={constructPath} routeToFolder={routeToFolder} tab={t} setTabs={setTabs} name={t.name} date={t.date()} key={t.id} files={files} setFiles={setFiles} title={t.title} />
+                            return <Window 
+                                        key={t.id}
+                                        handleTabChange={handleTabChange}
+                                        constructPath={constructPath}
+                                        routeToFolder={routeToFolder}
+                                        tabIndex={index}
+                                        name={t.name}
+                                        date={t.date()}
+                                        files={files}
+                                        title={t.title}
+                                    />
                         } else {
-                            return <StaticWindow name={t.name} date={t.date()} key={t.id} title={t.title} />
+                            return <StaticWindow key={t.id} name={t.name} date={t.date()} title={t.title} tab={t} />
                         }
                     })
                 }

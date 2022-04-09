@@ -7,9 +7,7 @@ interface Props {
 }
 
 const Tab = (props: Props): ReactElement => {
-    const title = props.title;
-    const setOpenTab = props.setOpenTab;
-    const index = props.index;
+    const { title, index, setOpenTab } = props;
     const onClick = useCallback(() => setOpenTab(index), [setOpenTab, index]);
     return <a onClick={ onClick }>{ title }</a>;
 }

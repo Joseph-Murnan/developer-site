@@ -7,10 +7,9 @@ interface Props {
     title: string;
     name: string;
     files: Subfolder;
-    setFiles: Dispatch<SetStateAction<Subfolder>>;
     date: string;
-    tab: Tab,
-    setTabs: Dispatch<SetStateAction<Tab[]>>,
+    tabIndex: number,
+    handleTabChange: Function,
     constructPath: Function,
     routeToFolder: Function
 };
@@ -58,7 +57,7 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
 };
 
 const Window = (props: Props): ReactElement => {
-    const { constructPath, routeToFolder, date, files } = props;
+    const { constructPath, routeToFolder, date, files, tabIndex, handleTabChange, name } = props;
     const [window, dispatchText] = useReducer<Reducer<Window, WindowReducer>>(windowReducer, { currentText: '', prevLines: [], active: defaultActiveState });
     const write = useCallback(() => {
         count === terminalText.length ? count = 0 : null;
@@ -123,10 +122,13 @@ const Window = (props: Props): ReactElement => {
         window.currentText === '' && write();
         return () => clearTimeout(timer);
     }, []);
+    useEffect(() => {
+        handleTabChange(tabIndex, window.active.name);
+    }, [window.active]);
     return (
         <div className={styles.textContainer}>
             <div className={styles.terminalContent}>
-                <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ date }</span> on ttys000</div>
+                <div className={`${styles.lastLogin}`}>Last login: <span suppressHydrationWarning>{ date }</span> on { name }</div>
                 <PreviousLines prevLines={window.prevLines} />
                 <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.

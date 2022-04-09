@@ -17,8 +17,14 @@ const Tabs = (props: Props): ReactElement => {
     const { children, openTab, setOpenTab } = props;
     const windowData: WindowData = { tabs: [], windows: [] };
     children.forEach((item, index) => {
-        windowData.tabs.push(<li key={index} className={`${styles.tab} ` + (index == openTab ? `${styles.active}` : `${styles.inactive}`)}><Tab title={item.props.title} index={index} setOpenTab={setOpenTab} /></li>);
-        windowData.windows.push(index == openTab ? <div className={styles.showWindow} key={index}>{ item }</div> : <div key={index} className={styles.hideWindow}>{ item }</div>);
+        windowData.tabs.push(
+            <li key={index} className={`${styles.tab} ` + (index == openTab ? `${styles.active}` : `${styles.inactive}`)}>
+                <Tab title={item.props.title} index={index} setOpenTab={setOpenTab} />
+            </li>
+        );
+        windowData.windows.push(
+            index == openTab ? <div className={styles.showWindow} key={index}>{ item }</div> : <div key={index} className={styles.hideWindow}>{ item }</div>
+        );
     });
     return (
         <Fragment>
