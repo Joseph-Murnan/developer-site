@@ -87,7 +87,7 @@ const Terminal = (): ReactElement => {
                                         title={t.title}
                                     />
                         } else {
-                            return <StaticWindow key={t.id} name={t.name} date={t.date()} title={t.title} tab={t} />
+                            return <StaticWindow key={t.id} name={t.name} date={t.date()} title={t.title} />
                         }
                     })
                 }
