@@ -27,3 +27,20 @@
     position:relative;
     z-index:1;
 }
+
+.facade {
+    width:100vw;
+    max-width:100%;
+    height:100%;
+    position:absolute;
+    left:0px;
+}
+
+.facadeContainer {
+    width:0;
+    height:100%;
+    overflow:hidden;
+    position:absolute;
+    left:0;
+    top:0;
+}
