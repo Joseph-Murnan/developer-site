@@ -6,8 +6,16 @@ const Slider = (): ReactElement => {
     return (
         <div className={`${styles.section} section`}>
             <div className="grid">
-                <div className="centre">Data One</div>
-                <div className="centre">Data Two</div>
+                <div className={styles.gridBlock}>    
+                    <div className={styles.svgContainer}>
+                        <img src="/svg/devices.svg" />
+                    </div>
+                </div>
+                <div className={styles.gridBlock}>    
+                    <div className={styles.svgContainer}>
+                        <img src="/svg/storage.svg" />
+                    </div>
+                </div>
             </div>
             <Facade />
         </div>
