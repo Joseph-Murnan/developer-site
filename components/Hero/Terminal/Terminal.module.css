@@ -2,7 +2,7 @@
     display:inline-block;
     width:450px;
     background-color:#1e1e1e;
-    margin-right:5%;
+    margin-right:7.5%;
     height:255px;
     animation:fadeDelay 1.7s ease;
     border-radius:9px;
@@ -12,7 +12,7 @@
     z-index:2;
     color:whitesmoke;
     position:absolute;
-    top:calc(50% - 90px);
+    top:calc(50% - 95px);
     font-size:14px;
     border:1px solid #80808067;
     font-family:'Lucida Sans Unicode', Verdana, sans-serif;
@@ -26,6 +26,7 @@
 
 .showWindow {
     display:block;
+    height:100%;
 }
 
 .hideWindow {
@@ -213,6 +214,13 @@
     }
     100% {
         opacity:1;
+    }
+}
+
+@media (max-width:576px) {
+    .terminal {
+        width:350px;
+        top:calc(50% - 20px);
     }
 }
 

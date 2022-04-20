@@ -6,6 +6,14 @@ import styles from './Hero.module.css';
 const Hero = (): ReactElement => {
     return (
         <div className={`${styles.hero} section`}>
+            <div className={styles.titleContainer}>
+                <h1 className={styles.title}>
+                    Joseph Murnan
+                </h1>
+                <h2 className={styles.subtitle}>
+                    Full stack developer
+                </h2>
+            </div>
             <Decoration />
             <Terminal />
         </div>
