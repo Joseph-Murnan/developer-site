@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400&display=swap');
 @import 'variables.scss';
 @import 'nav.scss';
 
@@ -9,7 +9,8 @@
 html, body {
     padding:0;
     margin:0;
-    font-family:'Anek Telugu', sans-serif;
+    // font-family:'Anek Telugu', sans-serif;
+    font-family:'Barlow', sans-serif;
 }
 body {
     background-color:$black;
@@ -37,6 +38,7 @@ h1, h2 {
 }
 p {
     margin:0px 0px 3px 0px;
+    line-height:100%;
 }
 input, button {
     -webkit-appearance:none;
@@ -168,5 +170,26 @@ footer {
         .linkContainer {
             margin-top:0;
         }
+    }
+}
+
+.fade {
+    &.fast {
+        animation:fadeDelay 1.5s ease;
+    }
+    &.slow {
+        animation:fadeDelay 2.1s ease;
+    }
+}
+
+@keyframes fadeDelay {
+    0% {
+        opacity:0;
+    }
+    75% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
     }
 }

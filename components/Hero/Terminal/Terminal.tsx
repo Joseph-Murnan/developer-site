@@ -58,7 +58,7 @@ const Terminal = (): ReactElement => {
         }, 2000);
     }, []);
     return (
-        <div className={styles.terminal}>
+        <div className={`${styles.terminal} fade fast`}>
             <div className={styles.windowBar}>
                 <div className={styles.btnContainer}>
                     <button className={styles.close}></button>

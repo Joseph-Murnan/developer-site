@@ -1,19 +1,27 @@
-import { ReactElement, DragEvent, useState, useEffect } from 'react';
+import { ReactElement, DragEvent, useState, useEffect, useCallback, TouchEvent } from 'react';
 import Grid from '../Grid';
 import styles from '../Slider.module.css';
+
+const onDragStart = (e: DragEvent) => {
+    const img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    e.dataTransfer.setDragImage(img, 0, 0);
+}
 
 const Facade = (): ReactElement => {
     const [dragPos, setDragPos] = useState({ left:'50%' });
     const [facade, setFacade] = useState({ container: { left:'0px', width:'0px' }, target: { left:'-50vw' }});
     const [windowDimensions, setWindowDimensions] = useState(0);
     const setWindowWidth = () => setWindowDimensions(window.innerWidth);
-    const onDragStart = (e: DragEvent) => {
-        const img = new Image();
-        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-        e.dataTransfer.setDragImage(img, 0, 0);
-    }
+    const touchMove = (e: TouchEvent) => {
+        const leftOffset = e.nativeEvent.touches[0].pageX - (windowDimensions / 2);
+        handleDrag(leftOffset);
+    };
     const onDrag = (e: DragEvent) => {
         const leftOffset = e.pageX - (windowDimensions / 2);
+        handleDrag(leftOffset);     
+    };
+    const handleDrag = (leftOffset: number) => {
         if(leftOffset < 0) {
             setFacade(() => {
                 const positiveOffset = Math.abs(leftOffset);
@@ -27,16 +35,16 @@ const Facade = (): ReactElement => {
                 return { ...prevState, container: newContainer }
             })
         }
-        setDragPos({ left: `calc(50% + ${leftOffset}px)` });        
+        setDragPos({ left: `calc(50% + ${leftOffset}px)` });
     };
-    const onDragEnd = () => {
+    const handleDragEnd = useCallback(() => {
         setDragPos({ left: `calc(50% - 0px)` });
-        setFacade(prevState => {
+        setFacade(() => {
             const newContainer = { left:`0px`, width:`0px` }
             const newTarget = { left:`-50vw` } // calc(-50vw + 0px)
             return { container: newContainer, target: newTarget }
         })
-    };
+    }, []);
     useEffect(() => {
         if(typeof window !== 'undefined') {
             setWindowDimensions(window.innerWidth);
@@ -54,7 +62,9 @@ const Facade = (): ReactElement => {
                 draggable="true"
                 onDragStart={e => onDragStart(e)}
                 onDrag={e => onDrag(e)}
-                onDragEnd={() => onDragEnd()}
+                onDragEnd={() => handleDragEnd()}
+                onTouchMove={e => touchMove(e)}
+                onTouchEnd={() => handleDragEnd()}
                 className={`${styles.separator}`}
                 style={dragPos}
             >

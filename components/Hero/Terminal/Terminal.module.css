@@ -4,7 +4,7 @@
     background-color:#1e1e1e;
     margin-right:7.5%;
     height:255px;
-    animation:fadeDelay 1.7s ease;
+    /* animation:fadeDelay 1.7s ease; */
     border-radius:9px;
     direction:ltr;
     overflow:hidden;
@@ -12,7 +12,7 @@
     z-index:2;
     color:whitesmoke;
     position:absolute;
-    top:calc(50% - 95px);
+    top:40%;
     font-size:14px;
     border:1px solid #80808067;
     font-family:'Lucida Sans Unicode', Verdana, sans-serif;
@@ -205,22 +205,9 @@
     }
 }
 
-@keyframes fadeDelay {
-    0% {
-        opacity:0;
-    }
-    75% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
-    }
-}
-
 @media (max-width:576px) {
     .terminal {
         width:350px;
-        top:calc(50% - 20px);
     }
 }
 
