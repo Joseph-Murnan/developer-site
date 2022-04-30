@@ -26,7 +26,7 @@
 
 .showWindow {
     display:block;
-    height:100%;
+    height:74%;
 }
 
 .hideWindow {
@@ -139,7 +139,7 @@
 
 .textContainer {
     /* font-family:monospace; */
-    height:74%;
+    height:100%;
     position:relative;
     border-bottom:1px solid rgb(25, 25, 25);
 }
@@ -213,6 +213,8 @@
 
 @media (max-width:420px) {
     .terminal {
-        width:300px;
+        left:50%;
+        transform:translate(-50%, 0);
+        width:95%;
     }
 }

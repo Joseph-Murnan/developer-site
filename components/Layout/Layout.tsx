@@ -4,15 +4,13 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import { ReactElement } from 'react';
 
-interface Props {
-    children: ReactElement
+export interface Page {
+    label: string,
+    href: string
 }
 
 export interface pageCollection {
-    nav: Array<{
-        label: string,
-        href: string
-    }>
+    nav: Array<Page>
 }
 
 const pageProps: pageCollection = { // eventually pull this asynchronously from external json
@@ -32,7 +30,7 @@ const pageProps: pageCollection = { // eventually pull this asynchronously from 
     ]
 }
 
-const Layout = (props: Props): ReactElement => {
+const Layout = (props: { children: ReactElement }): ReactElement => {
     return (
         <ThemeProvider>
             <Head>

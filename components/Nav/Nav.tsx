@@ -1,19 +1,15 @@
 import { useState, useContext, ReactElement } from 'react';
-import { pageCollection } from '../Layout/Layout';
+import { pageCollection, Page } from '../Layout/Layout';
 import Theme from '../../store/theme';
 
-interface Props {
-    pageProps: pageCollection
-}
-
-const Nav = (props: Props): ReactElement => {
+const Nav = (props: { pageProps: pageCollection }): ReactElement => {
     const [open, setOpen] = useState(false);
     const handleMenu = () => setOpen(prevOpen => !prevOpen);
     const themeContext = useContext(Theme);
     return (
-        <div className={`${open.toString()} navContainer`}>
+        <div className={`${open} navContainer`}>
             <ul id="menu">
-                {props.pageProps.nav.map((page: any, index: number) => (
+                {props.pageProps.nav.map((page: Page, index: number) => (
                     <li className="menuItem" key={index}>
                         <a className={`theme border-left hover ${themeContext.theme}`} href={page.href}>
                             {page.label}

@@ -8,7 +8,7 @@ const Hero = (): ReactElement => {
         <div className={`${styles.hero} section`}>
             <div className={`${styles.titleContainer} fade slow`}>
                 <h1 className={styles.title}>
-                    Joseph Murnan
+                    Joseph <span>Murnan</span>
                 </h1>
                 <h2 className={styles.subtitle}>
                     Full stack developer

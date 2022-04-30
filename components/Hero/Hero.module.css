@@ -1,9 +1,7 @@
 .hero {
     height:100vh;
-    /* display:flex; */
     position:relative;
     direction:rtl;
-    align-items:center;
 }
 
 .titleContainer {
@@ -26,6 +24,24 @@
 
 @media (max-height:900px) {
     .hero {
-        height:700px;
+        height:825px;
+    }
+}
+
+@media (max-width:576px) {
+    .titleContainer {
+        top:14%;
+    }
+    .title span {
+        display:block;
+    }
+}
+
+@media (max-width:420px) {
+    .titleContainer {
+        right:5%;
+    }
+    .subtitle {
+        font-size:32px;
     }
 }

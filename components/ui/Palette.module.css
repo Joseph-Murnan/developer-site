@@ -1,31 +1,27 @@
 .switchContainer {
-    padding:15px 10px;
+    padding:5px 1px;
     display:inline-block;
     position:fixed;
-    right:0;
-    top:calc(50% - 18px);
-    border:solid rgba(25, 25, 25, 0.95);
-    border-width:1px 0px 1px 1px;
-    border-top-left-radius:3px;
-    border-bottom-left-radius:3px;
-    z-index:10;
-    background-color:#141414;
+    top:calc(50% - 20px);
+    z-index:2;
+    background-color:#141414b7;
+    transition:0.2s;
+    left:12px;
+    border-radius:20px;
+    box-shadow:0px 0px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 .iconContainer {
     display:flex;
-    height:22px;
-    width:22px;
-    border-radius:50%;
+    height:19px;
+    width:19px;
     overflow:hidden;
-    margin:9px 0;
+    margin:10px 9px;
+    border-radius:50%;
 }
 
 .icon {
-    height:100%;
     width:100%;
-    font-size:0px;
-    display:inline-block;
 }
 
 .icon button {
@@ -33,11 +29,31 @@
 }
 
 .iconOne { /* Avoid scoping this? */
-    background:#197dff;
+    background-color:#197dff;
 }
 .iconTwo {
-    background:#9b1616;
+    background-color:#9b1616;
 }
 .iconThree {
-    background:#8506da;
+    background-color:#8506da;
+}
+.iconFour {
+    background-color:#f0b60e;
+}
+.iconFive {
+    background-color:#db692c;
+}
+.iconSix {
+    background-color:#018e94;
+}
+
+@media (max-width:576px) {
+    .switchContainer {
+        bottom:4px;
+        top:auto;
+        left:50%;
+        transform:translate(-50%, 0);
+        padding:0;
+        display:flex;
+    }
 }

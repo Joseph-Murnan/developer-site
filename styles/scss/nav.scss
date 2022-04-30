@@ -6,8 +6,8 @@
     top:25px;
     right:25px;
     z-index:2;
-    &.false .bar {
-        &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+    &.false {
+        .bar {
             -webkit-transform-origin:left center;
             -moz-transform-origin:left center;
             -o-transform-origin:left center;

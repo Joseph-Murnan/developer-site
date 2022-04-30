@@ -104,6 +104,15 @@ footer {
         &.purpleTheme {
             background-color:$purple;
         }
+        &.yellowTheme {
+            background-color:$yellow;
+        }
+        &.orangeTheme {
+            background-color:$orange;
+        }
+        &.tealTheme {
+            background-color:$teal;
+        }
     }
     &.hover:hover {
         &.border-left {
@@ -115,6 +124,15 @@ footer {
             }
             &.purpleTheme {
                 border-left-color:$purple;
+            }
+            &.yellowTheme {
+                border-left-color:$yellow;
+            }
+            &.orangeTheme {
+                border-left-color:$orange;
+            }
+            &.tealTheme {
+                border-left-color:$teal;
             }
         }
     }
@@ -128,6 +146,15 @@ footer {
         &.purpleTheme {
             border-color:$purple;
         }
+        &.yellowTheme {
+            border-color:$yellow;
+        }
+        &.orangeTheme {
+            border-color:$orange;
+        }
+        &.tealTheme {
+            border-color:$teal;
+        }
     }
     &.links {
         &.blueTheme a:hover {
@@ -139,6 +166,15 @@ footer {
         &.purpleTheme a:hover {
             color:$purple;
         }
+        &.yellowTheme a:hover {
+            color:$yellow;
+        }
+        &.orangeTheme a:hover {
+            color:$orange;
+        }
+        &.tealTheme a:hover {
+            color:$teal;
+        }
     }
 }
 
@@ -146,9 +182,6 @@ footer {
 @media (max-width:1500px) {
     .container {
         max-width:95%;
-    }
-    .section {
-        font-size:16px;
     }
 }
 
@@ -159,6 +192,9 @@ footer {
 }
 
 @media (max-width:767px) {
+    .section {
+        font-size:16px;
+    }
     footer {
         .dividerContainer {
             flex-wrap:wrap;
