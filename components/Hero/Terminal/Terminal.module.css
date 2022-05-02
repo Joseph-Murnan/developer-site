@@ -2,8 +2,8 @@
     display:inline-block;
     width:450px;
     background-color:#1e1e1e;
-    margin-right:7.5%;
-    height:255px;
+    margin-right:11.5%;
+    height:270px;
     /* animation:fadeDelay 1.7s ease; */
     border-radius:9px;
     direction:ltr;
@@ -12,7 +12,7 @@
     z-index:2;
     color:whitesmoke;
     position:absolute;
-    top:40%;
+    top:37.5%;
     font-size:14px;
     border:1px solid #80808067;
     font-family:'Lucida Sans Unicode', Verdana, sans-serif;
@@ -205,9 +205,16 @@
     }
 }
 
+@media (max-width:991px) {
+    .terminal {
+        margin-right:9%;
+    }
+}
+
 @media (max-width:576px) {
     .terminal {
         width:350px;
+        top:37.5%;
     }
 }
 

@@ -2,7 +2,9 @@
     padding:5px 1px;
     display:inline-block;
     position:fixed;
-    top:calc(50% - 20px);
+    top:50%;
+    /* top:calc(50% - 20px); */
+    transform:translate(0, -50%);
     z-index:2;
     background-color:#141414b7;
     transition:0.2s;
@@ -28,22 +30,20 @@
     cursor:pointer;
 }
 
-.iconOne { /* Avoid scoping this? */
-    background-color:#197dff;
+.iconBlue { /* Avoid scoping this? */
+    background-color:#2282ff;
 }
-.iconTwo {
-    background-color:#9b1616;
-}
-.iconThree {
+.iconPurple {
     background-color:#8506da;
 }
-.iconFour {
-    background-color:#f0b60e;
+.iconYellow {
+    /* background-color:#ffd700; */
+    background-color:#e4b62e;
 }
-.iconFive {
-    background-color:#db692c;
+.iconOrange {
+    background-color:#e78030;
 }
-.iconSix {
+.iconTeal {
     background-color:#018e94;
 }
 

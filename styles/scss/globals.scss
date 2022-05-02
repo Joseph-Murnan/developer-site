@@ -52,7 +52,7 @@ input, button {
     margin:auto;
 }
 .section {
-    font-size:17px;
+    font-size:18px;
 }
 .grid {
     display:grid;
@@ -79,7 +79,7 @@ footer {
         }
         .divider {
             height:1px;
-            width:85%;
+            width:82%;
             background-image:linear-gradient(to right, #ffffff65 0, #ffffff82 10%, #ffffff95 33%, #ffffff95 66%, #ffffff82 90%, #ffffff65 100%);
         }
     }
@@ -98,14 +98,14 @@ footer {
         &.blueTheme {
             background-color:$blue;
         }
-        &.redTheme {
-            background-color:$red;
-        }
         &.purpleTheme {
             background-color:$purple;
         }
         &.yellowTheme {
             background-color:$yellow;
+            p, span {
+                text-shadow:1px 1px 3px rgba(0, 0, 0, 0.15);
+            }
         }
         &.orangeTheme {
             background-color:$orange;
@@ -118,9 +118,6 @@ footer {
         &.border-left {
             &.blueTheme {
                 border-left-color:$blue;
-            }
-            &.redTheme {
-                border-left-color:$red;
             }
             &.purpleTheme {
                 border-left-color:$purple;
@@ -140,9 +137,6 @@ footer {
         &.blueTheme {
             border-color:$blue;
         }
-        &.redTheme {
-            border-color:$red;
-        }
         &.purpleTheme {
             border-color:$purple;
         }
@@ -160,9 +154,6 @@ footer {
         &.blueTheme a:hover {
             color:$blue;
         }
-        &.redTheme a:hover {
-            color:$red;
-        }
         &.purpleTheme a:hover {
             color:$purple;
         }
@@ -178,22 +169,41 @@ footer {
     }
 }
 
+// ------------------------------------------ Animation
+.fade {
+    &.fast {
+        animation:fadeDelay 1.5s ease;
+    }
+    &.slow {
+        animation:fadeDelay 2.1s ease;
+    }
+}
+@keyframes fadeDelay {
+    0% {
+        opacity:0;
+    }
+    75% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+
 // ------------------------------------------ Responsive Design
 @media (max-width:1500px) {
     .container {
         max-width:95%;
     }
 }
-
 @media (max-width:1300px) {
     footer .dividerContainer .divider {
         width:75%;
     }
 }
-
 @media (max-width:767px) {
     .section {
-        font-size:16px;
+        font-size:17px;
     }
     footer {
         .dividerContainer {
@@ -206,26 +216,5 @@ footer {
         .linkContainer {
             margin-top:0;
         }
-    }
-}
-
-.fade {
-    &.fast {
-        animation:fadeDelay 1.5s ease;
-    }
-    &.slow {
-        animation:fadeDelay 2.1s ease;
-    }
-}
-
-@keyframes fadeDelay {
-    0% {
-        opacity:0;
-    }
-    75% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
     }
 }

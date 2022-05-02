@@ -45,7 +45,6 @@
     top:0;
     transform:translate(calc(50vw - 8px), 0);
     z-index:1;
-    /* background-color:rgba(0,0,0,0.01); */
     border-radius:2px; 
 }
 
