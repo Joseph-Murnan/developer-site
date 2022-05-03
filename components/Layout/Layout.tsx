@@ -6,7 +6,8 @@ import { ReactElement } from 'react';
 
 export interface Page {
     label: string,
-    href: string
+    href: string,
+    subPages: Array<Page> | Array<null>
 }
 
 export interface pageCollection {
@@ -16,16 +17,24 @@ export interface pageCollection {
 const pageProps: pageCollection = { // eventually pull this asynchronously from external json
     "nav": [
         {
+            "label": "Home",
+            "href": "/",
+            "subPages": []
+        },
+        {
             "label": "About",
-            "href": "#"
+            "href": "#",
+            "subPages": []
         },
         {
             "label": "Components",
-            "href": "#"
+            "href": "/components",
+            "subPages": []
         },
         {
             "label": "Contact",
-            "href": "#"
+            "href": "#",
+            "subPages": []
         }
     ]
 }

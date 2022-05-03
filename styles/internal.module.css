@@ -1,0 +1,15 @@
+.title {
+    font-weight:600;
+}
+
+.card {
+    background-color:white;
+    border-radius:5px;
+    padding:20px 50px;
+    position:relative;
+}
+
+.section {
+    position:relative;
+    padding:75px 0;
+}
