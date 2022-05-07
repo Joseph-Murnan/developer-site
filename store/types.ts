@@ -35,3 +35,12 @@ export interface WindowReducer {
     type: ActionType | string;
     payload: any;
 };
+
+export interface ComponentContent {
+    [key: string]: {
+        name: string,
+        title: string,
+        subtitle: string,
+        content: string
+    }
+};
