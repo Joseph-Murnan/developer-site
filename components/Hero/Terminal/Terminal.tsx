@@ -52,10 +52,11 @@ const Terminal = (): ReactElement => {
         });
     }
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setTabs(prevState => [...prevState, secondTab]);
             setOpenTab(1);
         }, 2000);
+        return () => clearTimeout(timer);
     }, []);
     return (
         <div className={`${styles.terminal} fade fast`}>

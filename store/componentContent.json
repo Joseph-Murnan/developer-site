@@ -1,8 +1,17 @@
 {
     "hero": {
-        "name": "desktop",
+        "name": "hero",
         "title": "Hero",
         "subtitle": "",
-        "content": "This is content"
+        "content": "This is content",
+        "subComponents": {
+            "terminal": {
+                "name": "terminal",
+                "title": "Terminal",
+                "subtitle": "",
+                "content": "This is content",
+                "subComponents": {}
+            }
+        }
     }
 }

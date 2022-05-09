@@ -36,11 +36,18 @@ export interface WindowReducer {
     payload: any;
 };
 
-export interface ComponentContent {
-    [key: string]: {
-        name: string,
-        title: string,
-        subtitle: string,
-        content: string
-    }
+export interface Component {
+    name: string,
+    title: string,
+    subtitle: string,
+    content: string,
+    subComponents: SubComponent
 };
+
+export interface ComponentContent {
+    [key: string]: Component
+};
+
+interface SubComponent {
+    [key: string]: Component
+}

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { ComponentContent } from '../../store/types';
-import componentContent from '../../store/componentContent.json';
-import Internal from '../../components/Internal/Internal';
+import { ComponentContent } from '../../../store/types';
+import componentContent from '../../../store/componentContent.json';
+import Internal from '../../../components/Internal/Internal';
 
 const ComponentDetail = () => {
     const router = useRouter();
