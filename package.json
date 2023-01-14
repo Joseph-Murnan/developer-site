@@ -6,7 +6,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "styles": "sass styles/scss/globals.scss:styles/globals.css --style=compressed",
+    "watch-styles": "sass styles/scss/globals.scss:styles/globals.css --style=compressed --watch"
   },
   "dependencies": {
     "next": "12.0.10",
