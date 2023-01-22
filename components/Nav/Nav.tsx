@@ -12,10 +12,8 @@ const Nav = (props: { pageProps: pageCollection }): ReactElement => {
             <ul id="menu">
                 {props.pageProps.nav.map((page: Page, index: number) => (
                     <li className="menuItem" key={index}>
-                        <Link href={page.href}>
-                            <a className={`theme border-left hover ${themeContext.theme}`}>
-                                { page.label }
-                            </a>
+                        <Link href={page.href} className={`theme border-left hover ${themeContext.theme}`}>
+                            { page.label }
                         </Link>
                     </li>
                 ))}
