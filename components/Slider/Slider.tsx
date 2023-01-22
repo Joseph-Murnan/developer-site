@@ -9,11 +9,13 @@ const Slider = (): ReactElement => {
                 <div className={styles.gridBlock}>    
                     <div className={styles.svgContainer}>
                         <img src="/svg/devices.svg" alt="devices icon" />
+                        <p>Client-side</p>
                     </div>
                 </div>
                 <div className={styles.gridBlock}>    
                     <div className={styles.svgContainer}>
                         <img src="/svg/storage.svg" alt="storage icon" />
+                        <p>Server-side</p>
                     </div>
                 </div>
             </div>

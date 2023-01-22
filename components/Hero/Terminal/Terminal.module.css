@@ -213,15 +213,9 @@
 
 @media (max-width:576px) {
     .terminal {
-        width:350px;
-        top:37.5%;
-    }
-}
-
-@media (max-width:420px) {
-    .terminal {
         left:50%;
         transform:translate(-50%, 0);
         width:95%;
+        top:37.5%;
     }
 }

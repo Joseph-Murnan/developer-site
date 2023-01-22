@@ -40,9 +40,11 @@
     }
     .title {
         font-size:74px;
+        line-height:65px;
     }
     .subtitle {
         font-size:34px;
+        margin:5px 0;
     }
     .title span {
         display:block;
