@@ -1,16 +1,17 @@
 import React, { ReactElement, Fragment } from 'react';
+import { PrevLine } from '../../../../store/types';
 import styles from '../Terminal.module.css';
 
 interface Props {
-    prevLines: Array<Array<string>>
+    prevLines: Array<PrevLine>
 }
 
 const PreviousLines = React.memo((props: Props): ReactElement => {
     return (
         <Fragment>
-            { props.prevLines.map((p: Array<string>, index: number) => 
+            { Object.values(props.prevLines).map((p: PrevLine, index: number) => 
                 <div className={`${styles.line}`} key={index}>
-                    <span className={styles.prependLine}>Joseph$ { p[0] } %</span><span>{ p[1] }</span>
+                    <span className={styles.prependLine}>Joseph$ { p.active } %</span><span>{ p.text }</span>
                 </div>
             )}
         </Fragment>

@@ -45,9 +45,8 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
             state.currentText.length > 0 && (newText = state.currentText.slice(0, -1));
             return { currentText: newText, active: state.active, prevLines: state.prevLines };
         case ActionType.ENTER:
-            let newActive = state.active;
-            action.payload.command && (newActive = action.payload.command(action.payload.segments));
-            return { currentText: '', active: (newActive ? newActive : state.active), prevLines: state.prevLines.concat([[state.active.name, action.payload.text]]) };
+            const newActive = action.payload?.command(action.payload.segments);
+            return { currentText: '', active: (newActive ? newActive : state.active), prevLines: state.prevLines.concat({ active: state.active.name, text: action.payload.text }) };
                                                                                             // ^ This is safe. concat() doesn't mutate the array it's called on.
         case ActionType.SET:
             return { currentText: action.payload, active: state.active, prevLines: state.prevLines };
@@ -101,15 +100,14 @@ const Window = (props: Props): ReactElement => {
     }, [window.active]);
     const list = (segments: Array<string>) => {};
     const handleCommandNotFound = (segments: Array<string>) => {};
-    const keyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const keyDown = (e: KeyboardEvent<HTMLDivElement>, text: string) => {
         e.preventDefault();
         const input: string = e.key;
         if(keystrokes.includes(input)) {
             dispatchText({ type:ActionType.WRITE, payload:input });
         } else if(input === 'Enter') {
-            const segments: Array<string> = window.currentText.split(' ');
+            const segments: Array<string> = text.split(' ');
             if(segments.length > 0) {
-                const text = window.currentText;
                 const commandType = segments[0];
                 const command = getCommand(commandType);
                 command && dispatchText({ type:ActionType.ENTER, payload: { text, segments, command }});
@@ -132,7 +130,7 @@ const Window = (props: Props): ReactElement => {
                 <PreviousLines prevLines={window.prevLines} />
                 <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
-                    onKeyDown={e => keyDown(e)}>
+                    onKeyDown={e => keyDown(e, window.currentText)}>
                     <span className={styles.prependLine}>Joseph$ { window.active.name } %</span><span>{ window.currentText }</span>
                 </div>
             </div>

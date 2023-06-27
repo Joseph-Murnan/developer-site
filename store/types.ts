@@ -19,16 +19,21 @@ export interface Subfolder {
 };
 
 export enum ActionType {
-    BACKSPACE = "Backspace",
-    ENTER = "Enter",
-    WRITE = "Write",
-    SET = "Set"
+    BACKSPACE = "Backspace", // handle backspace key press
+    ENTER = "Enter",         // handle enter key press
+    WRITE = "Write",         // handle keystroke matching item in keystrokes array
+    SET = "Set"              // replace whole string with new string
+};
+
+export interface PrevLine {
+    active: string,
+    text: string
 };
 
 export interface Window {
     currentText:string;
     active:Directory;
-    prevLines:Array<Array<string>>;
+    prevLines: Array<PrevLine>
 };
 
 export interface WindowReducer {
@@ -50,4 +55,4 @@ export interface ComponentContent {
 
 interface SubComponent {
     [key: string]: Component
-}
+};
