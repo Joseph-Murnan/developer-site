@@ -4,15 +4,15 @@ import StaticWindow from './Window/StaticWindow';
 import Tabs from './Tabs';
 import styles from './Terminal.module.css';
 import fs from '../../../store/fs.json';
-import { Subfolder, Tab, Directory } from '../../../store/types';
+import { Subfolder, Tab, Directory, DateFn, RouteToFolderFn, ConstructPathFn, HandleTabChangeFn } from '../../../store/types';
 
-const getDate = () => {
+const getDate: DateFn = (): string => {
     const date = new Date();
     const time = date.toLocaleString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     return `${date.toDateString()} ${time}`;
 };
 
-const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
+const routeToFolder: RouteToFolderFn = (subfolders: Subfolder, pathSegments: Array<string>, i: number): Array<Directory | undefined> => {
     return Object.values(subfolders).map((folder: Directory) => {
         if(folder.name == pathSegments[i] && pathSegments.at(-1) === pathSegments[i] && pathSegments.length === (i + 1)) {
             return folder;
@@ -22,7 +22,7 @@ const routeToFolder = (subfolders: Subfolder, pathSegments: Array<string>, i: nu
     })
 }
 
-const constructPath = (activePath: Array<string>, targetPath: Array<string>) => {
+const constructPath: ConstructPathFn = (activePath: Array<string>, targetPath: Array<string>) => {
     targetPath.forEach(p => {
         switch(p) {
             case '..':
@@ -41,10 +41,10 @@ const secondTab: Tab = { id: 1, type: 'interactive', name: 'ttys000', title: 'wi
 
 const Terminal = (): ReactElement => {
     const importedFiles: Subfolder = fs;
-    const [files, setFiles] = useState(importedFiles);
+    const [files] = useState(importedFiles);
     const [tabs, setTabs] = useState([initialTab]);
     const [openTab, setOpenTab] = useState(0);
-    const handleTabChange = (index: number, newTitle: string) => {
+    const handleTabChange: HandleTabChangeFn = (index: number, newTitle: string) => {
         setTabs(prevState => {
             const newState = [...prevState];
             newState[index] = { ...newState[index], title: newTitle };
@@ -74,7 +74,7 @@ const Terminal = (): ReactElement => {
             </div>
             <Tabs openTab={openTab} setOpenTab={setOpenTab}>
                 {
-                    tabs.map((t: { id: number, type: string, title: string, date: Function, name: string }, index: number): ReactElement => {
+                    tabs.map((t: Tab, index: number): ReactElement => {
                         if(t.type == 'interactive') {
                             return <Window 
                                         key={t.id}

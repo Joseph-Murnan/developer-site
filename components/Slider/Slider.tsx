@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import Image from 'next/image';
 import Facade from './Facade/Facade';
 import styles from './Slider.module.css';
 
@@ -8,13 +9,13 @@ const Slider = (): ReactElement => {
             <div className="grid">
                 <div className={styles.gridBlock}>    
                     <div className={styles.svgContainer}>
-                        <img src="/svg/devices.svg" alt="devices icon" />
+                        <Image height="55" width="55" src="/svg/devices.svg" alt="devices icon" />
                         <p>Client-side</p>
                     </div>
                 </div>
                 <div className={styles.gridBlock}>    
                     <div className={styles.svgContainer}>
-                        <img src="/svg/storage.svg" alt="storage icon" />
+                        <Image height="55" width="55" src="/svg/storage.svg" alt="storage icon" />
                         <p>Server-side</p>
                     </div>
                 </div>

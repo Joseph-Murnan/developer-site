@@ -18,4 +18,5 @@ const PreviousLines = React.memo((props: Props): ReactElement => {
     )
 })
 
+PreviousLines.displayName = 'PreviousLines';
 export default PreviousLines;

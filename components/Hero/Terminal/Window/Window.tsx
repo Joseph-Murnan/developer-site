@@ -1,7 +1,7 @@
-import { useEffect, useCallback, ReactElement, Dispatch, SetStateAction, KeyboardEvent, useReducer, Reducer } from 'react';
+import { useEffect, useCallback, ReactElement, KeyboardEvent, useReducer, Reducer } from 'react';
 import PreviousLines from './PreviousLines';
 import styles from '../Terminal.module.css';
-import { Directory, Subfolder, Tab, ActionType, Window, WindowReducer } from '../../../../store/types';
+import { Directory, Subfolder, ActionType, type Window, WindowReducer, CommandFn, RouteToFolderFn, ConstructPathFn, HandleTabChangeFn } from '../../../../store/types';
 
 interface Props {
     title: string;
@@ -9,9 +9,9 @@ interface Props {
     files: Subfolder;
     date: string;
     tabIndex: number,
-    handleTabChange: Function,
-    constructPath: Function,
-    routeToFolder: Function
+    handleTabChange: HandleTabChangeFn,
+    constructPath: ConstructPathFn,
+    routeToFolder: RouteToFolderFn
 };
 
 const defaultActiveState: Directory = {
@@ -42,7 +42,9 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
             return { currentText: state.currentText + action.payload, active: state.active, prevLines: state.prevLines };
         case ActionType.BACKSPACE:
             let newText = '';
-            state.currentText.length > 0 && (newText = state.currentText.slice(0, -1));
+            if(state.currentText.length > 0) {
+                (newText = state.currentText.slice(0, -1));
+            }
             return { currentText: newText, active: state.active, prevLines: state.prevLines };
         case ActionType.ENTER:
             const newActive = action.payload?.command(action.payload.segments);
@@ -57,9 +59,11 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
 
 const Window = (props: Props): ReactElement => {
     const { constructPath, routeToFolder, date, files, tabIndex, handleTabChange, name } = props;
-    const [window, dispatchText] = useReducer<Reducer<Window, WindowReducer>>(windowReducer, { currentText: '', prevLines: [], active: defaultActiveState });
+    const [window, dispatchText] = useReducer(windowReducer, { currentText: '', prevLines: [], active: defaultActiveState }); // was useReducer<Reducer<Window, WindowReducer>>
     const write = useCallback(() => {
-        count === terminalText.length ? count = 0 : null;
+        if(count === terminalText.length) {
+            count = 0;
+        }
         letter = terminalText[count].slice(0, ++index);
         dispatchText({ type:ActionType.SET, payload:letter });
         if(letter.length === terminalText[count].length) {
@@ -76,9 +80,9 @@ const Window = (props: Props): ReactElement => {
         timer = setTimeout(write, timeout);
     }, []);
     const getCommand = useCallback((commandType: string) => {
-        const commandTypes: { [key: string]: Function } = {
-            'cd': changeDirectory,
-            'ls': list
+        const commandTypes: { [key: string]: CommandFn } = {
+            'cd': (args: Array<string>) => changeDirectory(args),
+            'ls': (args: Array<string>) => list(args)
         };
         if(commandTypes.hasOwnProperty(commandType)) {
             return commandTypes[commandType];
@@ -98,8 +102,8 @@ const Window = (props: Props): ReactElement => {
             }
         }
     }, [window.active]);
-    const list = (segments: Array<string>) => {};
-    const handleCommandNotFound = (segments: Array<string>) => {};
+    const list = (segments: Array<string>) => segments;
+    const handleCommandNotFound = (segments: Array<string>) => segments;
     const keyDown = (e: KeyboardEvent<HTMLDivElement>, text: string) => {
         e.preventDefault();
         const input: string = e.key;
@@ -110,14 +114,16 @@ const Window = (props: Props): ReactElement => {
             if(segments.length > 0) {
                 const commandType = segments[0];
                 const command = getCommand(commandType);
-                command && dispatchText({ type:ActionType.ENTER, payload: { text, segments, command }});
+                dispatchText({ type:ActionType.ENTER, payload: { text, segments, command }});
             }
         } else {
             dispatchText({ type:input, payload:input });
         }
     };
     useEffect(() => {
-        window.currentText === '' && write();
+        if(window.currentText === '') {
+            write();
+        }
         return () => clearTimeout(timer);
     }, []);
     useEffect(() => {

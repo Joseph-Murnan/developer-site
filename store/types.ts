@@ -6,12 +6,22 @@ export interface Directory {
     subfolders: Subfolder;
 };
 
+export type DateFn = () => string;
+
+export type RouteToFolderFn =  (subfolders: Subfolder, pathSegments: Array<string>, i: number) => Array<Directory | undefined>;
+
+export type HandleTabChangeFn = (index: number, newTitle: string) => void;
+
+export type ConstructPathFn = (activePath: Array<string>, targetPath: Array<string>) => Array<string>;
+
+export type CommandFn = (args: Array<string>) => Array<string> | false | Directory | undefined;
+
 export interface Tab {
     id: number,
     type: string,
     name: string,
     title: string,
-    date: Function,
+    date: DateFn,
 };
 
 export interface Subfolder {
