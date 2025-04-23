@@ -2,7 +2,7 @@ import React, { ReactElement, Fragment } from 'react';
 import { PrevLine } from '../../../../store/types';
 import styles from '../Terminal.module.css';
 
-interface Props {
+type Props = {
     prevLines: Array<PrevLine>
 }
 

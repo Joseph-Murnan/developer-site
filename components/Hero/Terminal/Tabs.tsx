@@ -2,7 +2,7 @@ import { ReactElement, Fragment, JSX } from 'react';
 import Tab from './Tab';
 import styles from './Terminal.module.css';
 
-interface Props {
+type Props = {
     children: JSX.Element[];
     openTab: number;
     setOpenTab: React.Dispatch<React.SetStateAction<number>>;

@@ -14,7 +14,7 @@ export type HandleTabChangeFn = (index: number, newTitle: string) => void;
 
 export type ConstructPathFn = (activePath: Array<string>, targetPath: Array<string>) => Array<string>;
 
-export type CommandFn = (args: Array<string>) => Array<string> | false | Directory | undefined;
+export type CommandFn = (args: Array<string>) => boolean | object;
 
 export interface Tab {
     id: number,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 
-interface Props {
-    children: ReactElement<any> | ReactElement[]
+type Props = {
+    children: ReactElement | ReactElement[]
 }
 
 const Theme = React.createContext({

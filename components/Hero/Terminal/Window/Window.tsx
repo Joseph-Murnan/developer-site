@@ -3,7 +3,7 @@ import PreviousLines from './PreviousLines';
 import styles from '../Terminal.module.css';
 import { Directory, Subfolder, ActionType, type Window, WindowReducer, CommandFn, RouteToFolderFn, ConstructPathFn, HandleTabChangeFn } from '../../../../store/types';
 
-interface Props {
+type Props = {
     title: string;
     name: string;
     files: Subfolder;
@@ -47,7 +47,7 @@ const windowReducer: Reducer<Window, WindowReducer> = (state, action) => {
             }
             return { currentText: newText, active: state.active, prevLines: state.prevLines };
         case ActionType.ENTER:
-            const newActive = action.payload?.command(action.payload.segments);
+            const { newActive } = action.payload?.command(action.payload.segments);
             return { currentText: '', active: (newActive ? newActive : state.active), prevLines: state.prevLines.concat({ active: state.active.name, text: action.payload.text }) };
                                                                                             // ^ This is safe. concat() doesn't mutate the array it's called on.
         case ActionType.SET:
@@ -82,7 +82,7 @@ const Window = (props: Props): ReactElement => {
     const getCommand = useCallback((commandType: string) => {
         const commandTypes: { [key: string]: CommandFn } = {
             'cd': (args: Array<string>) => changeDirectory(args),
-            'ls': (args: Array<string>) => list(args)
+            // 'ls': (args: Array<string>) => list(args)
         };
         if(commandTypes.hasOwnProperty(commandType)) {
             return commandTypes[commandType];
@@ -91,19 +91,18 @@ const Window = (props: Props): ReactElement => {
         }
     }, [window.active]);
     const changeDirectory = useCallback((segments: Array<string>) => {
-        if(segments && segments[1]) {
+        if(segments?.[1] && window?.active?.path) {
             const targetPath: Array<string> = segments[1].split('/');
             const newPath: Array<string> = constructPath(window.active.path.split('/'), targetPath);
             const newFolder = routeToFolder(files, newPath, 1).filter(Boolean)[0];
             if(newFolder) {
-                return newFolder;
-            } else {
-                return false;
+                return { newActive: newFolder };
             }
         }
+        return false; // to do: directory not found message
     }, [window.active]);
-    const list = (segments: Array<string>) => segments;
-    const handleCommandNotFound = (segments: Array<string>) => segments;
+    // const list = (segments: Array<string>) => false;
+    const handleCommandNotFound = (segments: Array<string>): { attemptedCommand: string, newActive: boolean } => ({ attemptedCommand: segments[0], newActive: false }); // to do: send attemptedCommand to prevLines with message
     const keyDown = (e: KeyboardEvent<HTMLDivElement>, text: string) => {
         e.preventDefault();
         const input: string = e.key;
@@ -137,7 +136,7 @@ const Window = (props: Props): ReactElement => {
                 <div className={`${styles.line} ${styles.currentLine}`} contentEditable={true}
                     suppressContentEditableWarning={true} // This should be safe since we're capturing inputs rather than allowing direct DOM manipulation.
                     onKeyDown={e => keyDown(e, window.currentText)}>
-                    <span className={styles.prependLine}>Joseph$ { window.active.name } %</span><span>{ window.currentText }</span>
+                    <span className={styles.prependLine}>Joseph$ { window.active.name } %</span><span className={styles.currentText}>{ window.currentText }</span>
                 </div>
             </div>
         </div>

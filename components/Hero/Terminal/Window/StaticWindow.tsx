@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styles from '../Terminal.module.css';
 
-interface Props {
+type Props = {
     title: string;
     name: string;
     date: string;
